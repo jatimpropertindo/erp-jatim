@@ -1,0 +1,3027 @@
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_perdin_departement') {
+    // <editor-fold defaultstate="collapsed" desc="delete_account">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $deptId = $myDatabase->real_escape_string($_POST['deptId']);
+    // </editor-fold>
+    
+    if($deptId != '') {
+       
+            $sql = "DELETE FROM `perdin_departement` WHERE dept_id = {$deptId}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                $return_value = '|OK|Departement has successfully deleted.|';
+            } else {
+                $return_value = '|FAIL|Delete Departement failed.|';
+            }
+       
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'perdin_departement_data') {
+    // <editor-fold defaultstate="collapsed" desc="account_data">
+    
+    $return_value = '';
+    $boolNew = false;
+    $whereCondition = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $deptId = $myDatabase->real_escape_string($_POST['deptId']);
+    $dept = $myDatabase->real_escape_string($_POST['dept']);
+    
+    // </editor-fold>
+    
+    if ($deptId == '') {
+        $boolNew = true;
+    }
+    
+    
+    
+    if($dept != '' ) {
+        
+            if($boolNew) {
+               
+                $sql = "INSERT INTO `perdin_departement` (dept, entry_by, entry_date) VALUES ("
+                            . "'{$dept}', {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+               
+            } else {
+                $sql = "UPDATE `perdin_departement` SET "
+                        . "dept = '{$dept}', "
+                        . "edit_by = {$_SESSION['userId']}, "
+                        . "edit_date = STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s') "
+                        . "WHERE dept_id = {$deptId}";
+            }
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                if($boolNew) {
+                    $deptId = $myDatabase->insert_id;
+                }
+
+                $return_value = '|OK|departement has successfully inserted/updated.|'. $deptId .'|';
+            } else {
+                $return_value = '|FAIL|Insert/update departement failed.||';
+            }
+        
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_perdin_divisi') {
+    // <editor-fold defaultstate="collapsed" desc="delete_account">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $divId = $myDatabase->real_escape_string($_POST['divId']);
+    // </editor-fold>
+    
+    if($divId != '') {
+       
+            $sql = "DELETE FROM `perdin_divisi` WHERE div_id = {$divId}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                $return_value = '|OK|Divisi has successfully deleted.|';
+            } else {
+                $return_value = '|FAIL|Delete Divisi failed.|';
+            }
+       
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'perdin_divisi_data') {
+    // <editor-fold defaultstate="collapsed" desc="account_data">
+    
+    $return_value = '';
+    $boolNew = false;
+    $whereCondition = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $divId = $myDatabase->real_escape_string($_POST['divId']);
+	$deptId = $myDatabase->real_escape_string($_POST['deptId']);
+    $divisi = $myDatabase->real_escape_string($_POST['divisi']);
+    
+    // </editor-fold>
+    
+    if ($divId == '') {
+        $boolNew = true;
+    }
+    
+    
+    
+    if($deptId != '' && $divisi != '' ) {
+        
+            if($boolNew) {
+               
+                $sql = "INSERT INTO `perdin_divisi` (divisi, dept_id, entry_by, entry_date) VALUES ("
+                            . "'{$divisi}', '{$deptId}',{$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+               
+            } else {
+                $sql = "UPDATE `perdin_divisi` SET "
+                        . "dept_id = '{$deptId}', "
+                        . "divisi = '{$divisi}', "
+						. "edit_by = {$_SESSION['userId']}, "
+                        . "edit_date = STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s') "
+                        . "WHERE div_id = {$divId}";
+            }
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                if($boolNew) {
+                    $divId = $myDatabase->insert_id;
+                }
+
+                $return_value = '|OK|divisi has successfully inserted/updated.|'. $divId .'|';
+            } else {
+                $return_value = '|FAIL|Insert/update divisi failed.||';
+            }
+        
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_perdin_level') {
+    // <editor-fold defaultstate="collapsed" desc="delete_account">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $levelId = $myDatabase->real_escape_string($_POST['levelId']);
+    // </editor-fold>
+    
+    if($levelId != '') {
+       
+            $sql = "DELETE FROM `perdin_level` WHERE level_id = {$levelId}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                $return_value = '|OK|Level has successfully deleted.|';
+            } else {
+                $return_value = '|FAIL|Delete Level failed.|';
+            }
+       
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'perdin_level_data') {
+    // <editor-fold defaultstate="collapsed" desc="account_data">
+    
+    $return_value = '';
+    $boolNew = false;
+    $whereCondition = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $levelId = $myDatabase->real_escape_string($_POST['levelId']);
+	$level = $myDatabase->real_escape_string($_POST['level']);
+    
+    
+    // </editor-fold>
+    
+    if ($levelId == '') {
+        $boolNew = true;
+    }
+    
+    
+    
+    if($level != '' ) {
+        
+            if($boolNew) {
+               
+                $sql = "INSERT INTO `perdin_level` (level, entry_by, entry_date) VALUES ("
+                            . "'{$level}',{$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+               
+            } else {
+                $sql = "UPDATE `perdin_level` SET "
+                        . "level = '{$level}', "
+                        . "edit_by = {$_SESSION['userId']}, "
+                        . "edit_date = STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s') "
+                        . "WHERE level_id = {$levelId}";
+            }
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                if($boolNew) {
+                    $levelId = $myDatabase->insert_id;
+                }
+
+                $return_value = '|OK|level has successfully inserted/updated.|'. $levelId .'|';
+            } else {
+                $return_value = '|FAIL|Insert/update level failed.||';
+            }
+        
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_perdin_benefit') {
+    // <editor-fold defaultstate="collapsed" desc="delete_account">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $benefitId = $myDatabase->real_escape_string($_POST['benefitId']);
+    // </editor-fold>
+    
+    if($benefitId != '') {
+       
+            $sql = "DELETE FROM `perdin_benefit` WHERE benefit_id = {$benefitId}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                $return_value = '|OK|benefit has successfully deleted.|';
+            } else {
+                $return_value = '|FAIL|Delete benefit failed.|';
+            }
+       
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'perdin_benefit_data') {
+    // <editor-fold defaultstate="collapsed" desc="account_data">
+    
+    $return_value = '';
+    $boolNew = false;
+    $whereCondition = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $levelId = $myDatabase->real_escape_string($_POST['levelId']);
+	$benefitId = $myDatabase->real_escape_string($_POST['benefitId']);
+	$jenisBenefit = $myDatabase->real_escape_string($_POST['jenisBenefit']);
+	$amount = str_replace(",", "", $myDatabase->real_escape_string($_POST['amount']));
+	$keterangan = $myDatabase->real_escape_string($_POST['keterangan']);
+	$status = $myDatabase->real_escape_string($_POST['status']);
+	$benefitType = $myDatabase->real_escape_string($_POST['benefitType']);
+	$accountId = $myDatabase->real_escape_string($_POST['accountId']);
+    
+    
+    // </editor-fold>
+    
+    if ($benefitId == '') {
+        $boolNew = true;
+    }
+    
+    
+    
+    if($jenisBenefit != '' && $amount != '' && $status != '' && $levelId != '' ) {
+        
+            if($boolNew) {
+               
+                $sql = "INSERT INTO `perdin_benefit` (jenis_benefit, level_id,amount_benefit,keterangan,status, type, account_id, entry_by, entry_date) VALUES ("
+                            . "'{$jenisBenefit}','{$levelId}','{$amount}','{$keterangan}','{$status}','{$benefitType}','{$accountId}',{$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+               
+            } else {
+                $sql = "UPDATE `perdin_benefit` SET "
+                        . "jenis_benefit = '{$jenisBenefit}', "
+						. "level_id = '{$levelId}', "
+						. "amount_benefit = '{$amount}', "
+						. "keterangan = '{$keterangan}', "
+						. "status = '{$status}', "
+						. "type = '{$benefitType}', "
+						. "account_id = '{$accountId}', "
+                        . "edit_by = {$_SESSION['userId']}, "
+                        . "edit_date = STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s') "
+                        . "WHERE benefit_id = {$benefitId}";
+            }
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                if($boolNew) {
+                    $benefitId = $myDatabase->insert_id;
+                }
+
+                $return_value = '|OK|benefit has successfully inserted/updated.|'. $benefitId .'|';
+            } else {
+                $return_value = '|FAIL|Insert/update benefit failed.||';
+            }
+        
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_perdin_user') {
+    // <editor-fold defaultstate="collapsed" desc="delete_account">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $idUser = $myDatabase->real_escape_string($_POST['userId']);
+    // </editor-fold>
+    
+    if($idUser != '') {
+       
+            $sql = "DELETE FROM `perdin_user` WHERE id_user = {$idUser}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                $return_value = '|OK|user has successfully deleted.|';
+            } else {
+                $return_value = '|FAIL|Delete user failed.|';
+            }
+       
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'upload_advance_perdin') {
+    // <editor-fold defaultstate="collapsed" desc="account_data">
+    
+    $return_value = '';
+    $boolNew = false;
+    $whereCondition = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+	$sa_id = $myDatabase->real_escape_string($_POST['sa_id']);
+	
+	
+    //FILE    
+        if (isset($_FILES['file']) && $_FILES['file']['size'] > 0) {
+			echo "TESTING  EXTENSINON";
+            $allowed = array('png', 'jpg', 'pdf', 'doc', 'docs', 'xls', 'xlsx');
+            $fileName = $_FILES['file']['name'];
+            $x = explode('.', $fileName);
+            $ekstensi = strtolower(end($x));
+            $ukuran = $_FILES['file']['size'];
+            $file_tmp = $_FILES['file']['tmp_name'];
+    
+            if (in_array($ekstensi, $allowed) === true) {
+    
+                $attachmentPath = "./import/perdin";
+                    if (!is_dir($attachmentPath) && !file_exists($attachmentPath))
+                        $temp = mkdir($attachmentPath, 0755, TRUE);
+                    else
+                        $temp = TRUE;
+    
+                    if ($temp === TRUE) {
+                        $attachmentPath .= "/" . date("ymdHis") . "-" . basename($fileName);
+                            if (!move_uploaded_file($file_tmp, $attachmentPath)) {
+                                echo '|FAIL|Error while uploading file.|';
+                                die();
+                            }
+                    } else {
+                        echo '|FAIL|Error while creating directory.|';
+                        die();
+                    }
+    
+                
+            } else {
+                echo '|FAIL|EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN.|';
+                die();
+            }
+        }
+    
+    // </editor-fold>  
+    
+    if($sa_id != '' && $attachmentPath != '') {
+        
+            
+                $sql = "UPDATE `perdin_adv_settle` SET "
+                        . "upload_status = 1, "
+						. "docs = '{$attachmentPath}', "
+						. "upload_by = {$_SESSION['userId']}, "
+                        . "upload_date = STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s') "
+                        . "WHERE sa_id = {$sa_id}";
+            
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                if($boolNew) {
+                    //$saId = $myDatabase->insert_id;
+                }
+
+                $return_value = '|OK|Documents has successfully uploaded.||';
+            } else {
+                $return_value = '|FAIL|Upload documents failed.||';
+            }
+        
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'upload_advance_non_perdin') {
+    // <editor-fold defaultstate="collapsed" desc="account_data">
+    
+    $return_value = '';
+    $boolNew = false;
+    $whereCondition = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+	$sa_id = $myDatabase->real_escape_string($_POST['sa_id']);
+	
+	
+    //FILE    
+        if (isset($_FILES['file']) && $_FILES['file']['size'] > 0) {
+			echo "TESTING  EXTENSINON";
+            $allowed = array('png', 'jpg', 'pdf', 'doc', 'docs', 'xls', 'xlsx');
+            $fileName = $_FILES['file']['name'];
+            $x = explode('.', $fileName);
+            $ekstensi = strtolower(end($x));
+            $ukuran = $_FILES['file']['size'];
+            $file_tmp = $_FILES['file']['tmp_name'];
+    
+            if (in_array($ekstensi, $allowed) === true) {
+    
+                $attachmentPath = "./import/nonPerdin";
+                    if (!is_dir($attachmentPath) && !file_exists($attachmentPath))
+                        $temp = mkdir($attachmentPath, 0755, TRUE);
+                    else
+                        $temp = TRUE;
+    
+                    if ($temp === TRUE) {
+                        $attachmentPath .= "/" . date("ymdHis") . "-" . basename($fileName);
+                            if (!move_uploaded_file($file_tmp, $attachmentPath)) {
+                                echo '|FAIL|Error while uploading file.|';
+                                die();
+                            }
+                    } else {
+                        echo '|FAIL|Error while creating directory.|';
+                        die();
+                    }
+    
+                
+            } else {
+                echo '|FAIL|EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN.|';
+                die();
+            }
+        }
+    
+    // </editor-fold>  
+    
+    if($sa_id != '' && $attachmentPath != '') {
+        
+            
+                $sql = "UPDATE `non_adv_settle` SET "
+                        . "upload_status = 1, "
+						. "docs = '{$attachmentPath}', "
+						. "upload_by = {$_SESSION['userId']}, "
+                        . "upload_date = STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s') "
+                        . "WHERE sa_id = {$sa_id}";
+            
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                if($boolNew) {
+                    //$saId = $myDatabase->insert_id;
+                }
+
+                $return_value = '|OK|Documents has successfully uploaded.||';
+            } else {
+                $return_value = '|FAIL|Upload documents failed.||';
+            }
+        
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'perdin_user_data') {
+    // <editor-fold defaultstate="collapsed" desc="account_data">
+    
+    $return_value = '';
+    $boolNew = false;
+    $whereCondition = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+	$idUser = $myDatabase->real_escape_string($_POST['userId']);
+	$noRek = $myDatabase->real_escape_string($_POST['noRek']);
+	$nik = $myDatabase->real_escape_string($_POST['nik']);
+    $levelId = $myDatabase->real_escape_string($_POST['levelId']);
+	$divId = $myDatabase->real_escape_string($_POST['divId']);
+	$deptId = $myDatabase->real_escape_string($_POST['deptId']);
+	$joinDate = $myDatabase->real_escape_string($_POST['joinDate']);
+	$nama = $myDatabase->real_escape_string($_POST['nama']);
+	$status = $myDatabase->real_escape_string($_POST['status']);
+	$stockpile_id = $myDatabase->real_escape_string($_POST['stockpile_id']);
+    
+    
+    // </editor-fold>
+    
+    if ($idUser == '') {
+        $boolNew = true;
+    }
+    
+    
+    
+    if($nama != '' && $noRek != '' && $nik != '' && $levelId != '' && $divId != '' && $deptId != '' && $joinDate != '' && $status != '' && $stockpile_id != '') {
+        
+            if($boolNew) {
+               
+                $sql = "INSERT INTO `perdin_user` (nama,no_rek,nik,join_date,status,level_id,dept_id,div_id, stockpile_id, entry_by, entry_date) VALUES ("
+                            . "'{$nama}','{$noRek}','{$nik}',STR_TO_DATE('$joinDate', '%d/%m/%Y'),'{$status}','{$levelId}','{$deptId}','{$divId}', '{$stockpile_id}', {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+               
+            } else {
+                $sql = "UPDATE `perdin_user` SET "
+                        . "nama = '{$nama}', "
+						. "no_rek = '{$noRek}', "
+						. "nik = '{$nik}', "
+						. "join_date = STR_TO_DATE('$joinDate', '%d/%m/%Y'), "
+						. "status = '{$status}', "
+						. "level_id = '{$levelId}', "
+						. "dept_id = '{$deptId}', "
+						. "div_id = '{$divId}', "
+						. "stockpile_id = '{$stockpile_id}', "
+                        . "edit_by = {$_SESSION['userId']}, "
+                        . "edit_date = STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s') "
+                        . "WHERE id_user = {$idUser}";
+            }
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                if($boolNew) {
+                    $idUser = $myDatabase->insert_id;
+                }
+
+                $return_value = '|OK|user has successfully inserted/updated.|'. $idUser .'|';
+            } else {
+                $return_value = '|FAIL|Insert/update user failed.||';
+            }
+        
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'perdin_adv_settle_data') {
+    // <editor-fold defaultstate="collapsed" desc="invoice_detail">
+echo 'a';
+    $return_value = '';
+    $boolShipment1 = false;
+    $boolPO = false;
+    $boolVendor = false;
+	$accountId = '';
+    //$grandTotal = 0;
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+	$sa_id = $myDatabase->real_escape_string($_POST['sa_id']);
+    $id_user = $myDatabase->real_escape_string($_POST['id_user']);
+    $sa_method = $myDatabase->real_escape_string($_POST['sa_method']);
+    $sa_no = $myDatabase->real_escape_string($_POST['sa_no']);
+    $date_from = $myDatabase->real_escape_string($_POST['date_from']);
+    $date_to = $myDatabase->real_escape_string($_POST['date_to']);
+    $origin = $myDatabase->real_escape_string($_POST['origin']);
+	$destination = $myDatabase->real_escape_string($_POST['destination']);
+    $remarks = $myDatabase->real_escape_string($_POST['remarks']);
+    $shipment_id = $myDatabase->real_escape_string($_POST['shipment_id']);
+	$tanggal = $myDatabase->real_escape_string($_POST['tanggal']);
+	$grandTotal = $myDatabase->real_escape_string($_POST['grandTotal']);
+	$hari = $myDatabase->real_escape_string($_POST['hari']);
+	$stockpile_id = $myDatabase->real_escape_string($_POST['stockpile_id']);
+	$benefitType = $myDatabase->real_escape_string($_POST['benefitType']);
+	$accountId = $myDatabase->real_escape_string($_POST['accountId']);
+    $slipNos = "";
+    $slipNos2 = "";
+	$slipNos3 = "";
+   
+   if ($shipment_id == '') {
+        $shipment_id = 0;
+    }
+	
+	if ($id_user != '' && $tanggal != '' && $sa_method != '' && $sa_no != '' && $date_from != '' && $date_to != '' && $origin != '' && $destination != '' && $grandTotal != '') {
+		if($sa_id == ''){
+		 $sql = "INSERT INTO `perdin_adv_settle` (sa_method, tanggal, id_user, sa_no, remarks, origin, destination, date_from, date_to, shipment_id, stockpile_id, total_amount, entry_by, entry_date) VALUES ("
+                    . "{$sa_method}, STR_TO_DATE('$tanggal', '%d/%m/%Y'),{$id_user}, '{$sa_no}', '{$remarks}', {$origin}, {$destination}, STR_TO_DATE('$date_from', '%d/%m/%Y'), STR_TO_DATE('$date_to', '%d/%m/%Y'), '{$shipment_id}', '{$stockpile_id}', '{$grandTotal}', {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+                $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+                if ($result !== false) {
+                    $sa_id = $myDatabase->insert_id;
+
+                    $return_value = '|OK|Data has successfully inserted.|' .$sa_id. '|' .$sa_method. '|';
+					
+					$entryBy = $_SESSION['userId'];
+					$date2 = new DateTime();
+					$currentDate2 = $date2->format('Y-m-d H:i:s');
+					
+					if($sa_method == 2){
+					if (isset($_POST['checkedSlips2'])) {
+                        $checks2 = $_POST['checkedSlips2'];
+						if (isset($_POST['checkedSlips3'])) {
+							$checks3 = $_POST['checkedSlips3'];
+							if (isset($_POST['checkedSlips'])) {
+								$checks = $_POST['checkedSlips'];
+							} else {
+								$checks = '';
+							}
+						for ($i = 0; $i < sizeof($checks2); $i++) {
+                            if ($checks[$i] != '') {
+                                if ($slipNos2 == '') {
+                                    $slipNos2 .= '(' . $sa_id . ',' . $checks[$i] . ',' . $checks2[$i] . ',' . "'" . $checks3[$i] . "'" . ',' . $hari . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'" .','. $benefitType . ','. $accountId .')';
+                                } else {
+                                    $slipNos2 .= ',' . '(' . $sa_id . ',' . $checks[$i] . ',' . $checks2[$i] . ',' . "'" . $checks3[$i] . "'" . ',' . $hari . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'" . ','. $benefitType . ','. $accountId .')';
+                                }
+                            }
+                        }
+						}
+                    }
+					echo $slipNos2;
+                    $sql = "INSERT INTO perdin_adv_detail (sa_id, benefit_id ,amount,keterangan,hari,entry_by, entry_date, type, account_id) VALUES {$slipNos2}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if ($result === false) {
+                        echo 'salah';
+                    }
+					
+					}else{
+					$sql = "UPDATE perdin_settle_detail SET sa_id = {$sa_id} WHERE sa_id IS NULL AND id_user = {$id_user} AND entry_by = {$_SESSION['userId']}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if ($result === false) {
+                        echo 'salah';
+                    }
+						
+					}
+					
+				}else {
+                    $return_value = '|FAIL|Insert Data failed.||';
+                    echo $sql;
+                }
+		}else{
+			$sql = "UPDATE `perdin_adv_settle` SET "
+                        . "tanggal = STR_TO_DATE('$tanggal', '%d/%m/%Y'), "
+						. "id_user = '{$id_user}', "
+						. "remarks = '{$remarks}', "
+						. "shipment_id = '{$shipment_id}', "
+						//. "join_date = STR_TO_DATE('$joinDate', '%d/%m/%Y'), "
+						. "origin = '{$origin}', "
+						. "destination = '{$destination}', "
+						. "date_from = STR_TO_DATE('$date_from', '%d/%m/%Y'), "
+						. "date_to = STR_TO_DATE('$date_to', '%d/%m/%Y'), "
+						. "stockpile_id = '{$stockpile_id}', "
+                        . "total_amount = '{$grandTotal}' "
+                        
+                        . "WHERE sa_id = {$sa_id}";
+			$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+			if ($result !== false) {
+				
+				$return_value = '|OK|Data has successfully updated.|' .$sa_id. '|' .$sa_method. '|';
+				
+				/*if($sa_method == 2){
+					if (isset($_POST['checkedSlips2'])) {
+                        $checks2 = $_POST['checkedSlips2'];
+						if (isset($_POST['checkedSlips3'])) {
+							$checks3 = $_POST['checkedSlips3'];
+							if (isset($_POST['checkedSlips'])) {
+								$checks = $_POST['checkedSlips'];
+							} else {
+								$checks = '';
+							}
+						for ($i = 0; $i < sizeof($checks2); $i++) {
+                            if ($checks[$i] != '') {
+                                if ($slipNos2 == '') {
+                                    $slipNos2 .= '(' . $sa_id . ',' . $checks[$i] . ',' . $checks2[$i] . ',' . "'" . $checks3[$i] . "'" . ',' . $hari . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'" .','. $benefitType . ','. $accountId .')';
+                                } else {
+                                    $slipNos2 .= ',' . '(' . $sa_id . ',' . $checks[$i] . ',' . $checks2[$i] . ',' . "'" . $checks3[$i] . "'" . ',' . $hari . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'" . ','. $benefitType . ','. $accountId .')';
+                                }
+                            }
+                        }
+						}
+                    }
+					echo $slipNos2;
+                    $sql = "INSERT INTO perdin_adv_detail (sa_id, benefit_id ,amount,keterangan,hari,entry_by, entry_date, type, account_id) VALUES {$slipNos2}";
+					//$sql = "UPDATE perdin_adv_detail SET benefit_id = ,amount = ,keterangan = ,hari = , type = , account_id = ) VALUES {$slipNos2}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if ($result === false) {
+                        echo 'salah';
+                    }
+					
+					}*/
+				
+			}else {
+                    $return_value = '|FAIL|Insert Data failed.||';
+                    echo $sql;
+                }
+		}
+            } else {
+                $return_value = '|FAIL|Please fill the required fields.||';
+            }
+	
+    
+    echo $return_value;
+		
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'non_adv_settle_data') {
+    // <editor-fold defaultstate="collapsed" desc="invoice_detail">
+echo 'a';
+    $return_value = '';
+    $boolShipment1 = false;
+    $boolPO = false;
+    $boolVendor = false;
+    //$grandTotal = 0;
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+	$sa_id = $myDatabase->real_escape_string($_POST['sa_id']);
+    $id_user = $myDatabase->real_escape_string($_POST['id_user']);
+    $sa_method = $myDatabase->real_escape_string($_POST['sa_method']);
+    $sa_no = $myDatabase->real_escape_string($_POST['sa_no']);
+    //$date_from = $myDatabase->real_escape_string($_POST['date_from']);
+    //$date_to = $myDatabase->real_escape_string($_POST['date_to']);
+    //$origin = $myDatabase->real_escape_string($_POST['origin']);
+	$stockpile_id = $myDatabase->real_escape_string($_POST['stockpile_id']);
+    $remarks = $myDatabase->real_escape_string($_POST['remarks']);
+    $shipment_id = $myDatabase->real_escape_string($_POST['shipment_id']);
+	$tanggal = $myDatabase->real_escape_string($_POST['tanggal']);
+	$benefitType = $myDatabase->real_escape_string($_POST['benefitType']);
+	
+	if($sa_method == 2){
+		$grandTotal = $myDatabase->real_escape_string($_POST['amountAdv']);
+	}else{
+		$grandTotal = $myDatabase->real_escape_string($_POST['grandTotal']);
+	}
+	//$hari = $myDatabase->real_escape_string($_POST['hari']);
+    //$slipNos = "";
+    //$slipNos2 = "";
+	//$slipNos3 = "";
+   
+   if ($shipment_id == '') {
+        $shipment_id = 0;
+    }
+	
+	if ($id_user != '' && $tanggal != '' && $sa_method != '' && $sa_no != '' && $grandTotal != '') {
+		
+		
+		if($sa_id == ''){
+		 $sql = "INSERT INTO `non_adv_settle` (sa_method, tanggal, id_user, sa_no, remarks,  shipment_id, stockpile_id, total_amount, entry_by, entry_date) VALUES ("
+                    . "{$sa_method}, STR_TO_DATE('$tanggal', '%d/%m/%Y'),{$id_user}, '{$sa_no}', '{$remarks}', '{$shipment_id}', '{$stockpile_id}' , '{$grandTotal}', {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+                $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+                if ($result !== false) {
+                    $sa_id = $myDatabase->insert_id;
+
+                    $return_value = '|OK|Data has successfully inserted.|' .$sa_id. '|' .$sa_method. '|';
+					
+					$entryBy = $_SESSION['userId'];
+					$date2 = new DateTime();
+					$currentDate2 = $date2->format('Y-m-d H:i:s');
+					
+					if($sa_method == 2){
+					/*if (isset($_POST['checkedSlips2'])) {
+                        $checks2 = $_POST['checkedSlips2'];
+						if (isset($_POST['checkedSlips3'])) {
+							$checks3 = $_POST['checkedSlips3'];
+							if (isset($_POST['checkedSlips'])) {
+								$checks = $_POST['checkedSlips'];
+							} else {
+								$checks = '';
+							}
+						for ($i = 0; $i < sizeof($checks2); $i++) {
+                            if ($checks[$i] != '') {
+                                if ($slipNos2 == '') {
+                                    $slipNos2 .= '(' . $sa_id . ',' . $checks[$i] . ',' . $checks2[$i] . ',' . "'" . $checks3[$i] . "'" . ',' . $hari . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'" .')';
+                                } else {
+                                    $slipNos2 .= ',' . '(' . $sa_id . ',' . $checks[$i] . ',' . $checks2[$i] . ',' . "'" . $checks3[$i] . "'" . ',' . $hari . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'" . ')';
+                                }
+                            }
+                        }
+						}
+                    }*/
+					$sqla = "SELECT account_id FROM `account` WHERE account_no = 150200 AND account_type = {$benefitType}";
+					$resulta = $myDatabase->query($sqla, MYSQLI_STORE_RESULT);
+					if($resulta !== false && $resulta->num_rows == 1) {
+					$rowa = $resulta->fetch_object();
+					
+						$accountId = $rowa->account_id;
+					}
+				 
+					echo $slipNos2;
+                    $sql = "INSERT INTO non_adv_detail (sa_id ,amount,keterangan,entry_by, entry_date,type,account_id) VALUES ({$sa_id}, '{$grandTotal}','{$remarks}', {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'), '{$benefitType}', '{$accountId}')";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if ($result === false) {
+                        echo 'salah';
+                    }
+					
+					}else{
+					$sql = "UPDATE non_settle_detail SET sa_id = {$sa_id} WHERE sa_id IS NULL AND id_user = {$id_user} AND entry_by = {$_SESSION['userId']}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if ($result === false) {
+                        echo 'salah';
+                    }
+						
+					}
+					
+				}else {
+                    $return_value = '|FAIL|Insert Data failed.||';
+                    echo $sql;
+                }
+			}else{
+			$sql = "UPDATE `non_adv_settle` SET "
+                        . "tanggal = STR_TO_DATE('$tanggal', '%d/%m/%Y'), "
+						. "id_user = '{$id_user}', "
+						. "remarks = '{$remarks}', "
+						. "shipment_id = '{$shipment_id}', "
+						//. "join_date = STR_TO_DATE('$joinDate', '%d/%m/%Y'), "
+						//. "origin = '{$origin}', "
+						//. "destination = '{$destination}', "
+						//. "date_from = STR_TO_DATE('$date_from', '%d/%m/%Y'), "
+						//. "date_to = STR_TO_DATE('$date_to', '%d/%m/%Y'), "
+						. "stockpile_id = '{$stockpile_id}', "
+                        . "total_amount = '{$grandTotal}' "
+                        
+                        . "WHERE sa_id = {$sa_id}";
+			$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+			if ($result !== false) {
+				
+				$return_value = '|OK|Data has successfully updated.|' .$sa_id. '|' .$sa_method. '|';
+				
+			}else {
+                    $return_value = '|FAIL|Insert Data failed.||';
+                    echo $sql;
+                }
+		}
+
+            } else {
+                $return_value = '|FAIL|Please fill the required fields.||';
+            }
+	
+    
+    echo $return_value;
+		
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_perdin_adv') {
+    // <editor-fold defaultstate="collapsed" desc="delete_account">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $sa_id = $myDatabase->real_escape_string($_POST['sa_id']);
+    // </editor-fold>
+    
+    if($sa_id != '') {
+        $sql = "SELECT * FROM `perdin_adv_settle` WHERE sa_id = {$sa_id}";
+		$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		if($result !== false && $result->num_rows == 1) {
+				 $row = $result->fetch_object();
+				 
+		if($row->sa_method == 1){		 
+		
+		$sql = "DELETE FROM `perdin_settle_detail` WHERE sa_id = {$sa_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		
+		$sql = "DELETE FROM `perdin_adv_settle` WHERE sa_id = {$sa_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		}else{
+		$sql = "DELETE FROM `perdin_adv_detail` WHERE sa_id = {$sa_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		
+		$sql = "DELETE FROM `perdin_adv_settle` WHERE sa_id = {$sa_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		}
+		}
+        
+        //if($result !== false && $result->num_rows == 0) {
+            //$sql = "DELETE FROM `account` WHERE account_id = {$accountId}";
+            //$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                $return_value = '|OK|Data has successfully deleted.|';
+            } else {
+                $return_value = '|FAIL|Delete Data failed.|';
+            }
+        //} else {
+          //  $return_value = '|FAIL|Account in use in payments.|';
+        //}
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_non_adv') {
+    // <editor-fold defaultstate="collapsed" desc="delete_account">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $sa_id = $myDatabase->real_escape_string($_POST['sa_id']);
+    // </editor-fold>
+    
+    if($sa_id != '') {
+        $sql = "SELECT * FROM `non_adv_settle` WHERE sa_id = {$sa_id}";
+		$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		if($result !== false && $result->num_rows == 1) {
+				 $row = $result->fetch_object();
+				 
+		if($row->sa_method == 1){		 
+		
+		$sql = "DELETE FROM `non_settle_detail` WHERE sa_id = {$sa_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		
+		$sql = "DELETE FROM `non_adv_settle` WHERE sa_id = {$sa_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		}else{
+		$sql = "DELETE FROM `non_adv_detail` WHERE sa_id = {$sa_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		
+		$sql = "DELETE FROM `non_adv_settle` WHERE sa_id = {$sa_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		}
+		}
+        
+        //if($result !== false && $result->num_rows == 0) {
+            //$sql = "DELETE FROM `account` WHERE account_id = {$accountId}";
+            //$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                $return_value = '|OK|Data has successfully deleted.|';
+            } else {
+                $return_value = '|FAIL|Delete Data failed.|';
+            }
+        //} else {
+          //  $return_value = '|FAIL|Account in use in payments.|';
+        //}
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'approval_perdin') {
+    // <editor-fold defaultstate="collapsed" desc="invoice_detail">
+echo 'a';
+    $return_value = '';
+    $boolShipment1 = false;
+    $boolPO = false;
+    $boolVendor = false;
+	
+    //$grandTotal = 0;
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+	$sa_id = $myDatabase->real_escape_string($_POST['sa_id']);
+	$rejectRemarks = $myDatabase->real_escape_string($_POST['rejectRemarks']);
+	$grandTotal = $myDatabase->real_escape_string($_POST['grandTotal']);
+	$date_from = $myDatabase->real_escape_string($_POST['date_from']);
+    $date_to = $myDatabase->real_escape_string($_POST['date_to']);
+	$level_id = $myDatabase->real_escape_string($_POST['level_id']);
+	$id_user = $myDatabase->real_escape_string($_POST['id_user']);
+    /*$uom = $myDatabase->real_escape_string($_POST['uom']);
+    $qty = $myDatabase->real_escape_string($_POST['qty']);
+    $price = $myDatabase->real_escape_string($_POST['price']);
+    $amount = $myDatabase->real_escape_string($_POST['amount']);
+    $notes = $myDatabase->real_escape_string($_POST['notes']);
+	$settlementType = $myDatabase->real_escape_string($_POST['settlementType']);
+	$accountId = $myDatabase->real_escape_string($_POST['accountId']);
+	$items = $myDatabase->real_escape_string($_POST['items']);
+	$userTo = $myDatabase->real_escape_string($_POST['userTo']);*/
+    $slipNos = "";
+    $slipNos2 = "";
+   
+	$entryBy = $_SESSION['userId'];
+	$date2 = new DateTime();
+	$currentDate2 = $date2->format('Y-m-d H:i:s');
+	
+	
+	if ($_POST['_method'] == 'REJECT') {
+		
+		if($sa_id != '' && $rejectRemarks != ''){
+        // <editor-fold defaultstate="collapsed" desc="DELETE PENGAJUAN GENERAL">
+        //$pgId = $myDatabase->real_escape_string($_POST['pgId']);
+        //if ($pgId != '') {
+            $sql = "UPDATE perdin_adv_settle SET approval_status = 2, reject_remarks = '{$rejectRemarks}' WHERE sa_id =  {$sa_id}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if ($result !== false) {
+                $return_value = '|OK|Data has successfully rejected.|';
+            } else {
+                $return_value = '|FAIL|Reject data failed.|';
+            }
+        } else {
+            $return_value = '|FAIL|Please fill the required fields.||';
+        }
+        echo $return_value;
+        // </editor-fold>
+    } else{
+		
+		if($sa_id != ''){
+        // <editor-fold defaultstate="collapsed" desc="DELETE PENGAJUAN GENERAL">
+        //$pgId = $myDatabase->real_escape_string($_POST['pgId']);
+        //if ($pgId != '') {
+            $sql = "UPDATE perdin_adv_settle SET approval_status = 1, total_amount = '{$grandTotal}', date_from = STR_TO_DATE('$date_from', '%d/%m/%Y'),date_to = STR_TO_DATE('$date_to', '%d/%m/%Y') WHERE sa_id =  {$sa_id}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+			
+			$sql = "UPDATE general_vendor SET level_id = '{$level_id}' WHERE general_vendor_id =  {$id_user}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if ($result !== false) {
+                $return_value = '|OK|Data has successfully Appproved.|';
+            } else {
+                $return_value = '|FAIL|Approve Data failed.|';
+            }
+        } else {
+            $return_value = '|FAIL|Please fill the required fields.||';
+        }
+        echo $return_value;
+		
+	}
+		
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'perdin_settle_detail') {
+    // <editor-fold defaultstate="collapsed" desc="invoice_detail">
+echo 'a';
+    $return_value = '';
+    $boolShipment1 = false;
+    $boolPO = false;
+    $boolVendor = false;
+	
+    //$grandTotal = 0;
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+	$saId = $myDatabase->real_escape_string($_POST['sa_id']);
+	$settleId = $myDatabase->real_escape_string($_POST['settleId']);
+	$id_user = $myDatabase->real_escape_string($_POST['id_user']);
+    $uom = $myDatabase->real_escape_string($_POST['uom']);
+    $qty = $myDatabase->real_escape_string($_POST['qty']);
+    $price = $myDatabase->real_escape_string($_POST['price']);
+    $amount = $myDatabase->real_escape_string($_POST['amount']);
+    $notes = $myDatabase->real_escape_string($_POST['notes']);
+	$settlementType = $myDatabase->real_escape_string($_POST['settlementType']);
+	$accountId = $myDatabase->real_escape_string($_POST['accountId']);
+	$items = $myDatabase->real_escape_string($_POST['items']);
+	$userTo = $myDatabase->real_escape_string($_POST['userTo']);
+    $slipNos = "";
+    $slipNos2 = "";
+   
+	$entryBy = $_SESSION['userId'];
+	$date2 = new DateTime();
+	$currentDate2 = $date2->format('Y-m-d H:i:s');
+   
+	
+	if ($settlementType != '' && $accountId != '' && $items != '' && $uom != '' && $qty != '' && $price != '' && $amount != 0 && $notes != '') {
+		
+		if ($userTo == ''){
+			$userTo = 0;
+		}
+		if ($saId == ''){
+			$saId = 'NULL';
+		}
+		if($settleId == ''){
+		 $sql = "INSERT INTO `perdin_settle_detail` (sa_id,settlementType, accountId, items, uom, qty, price, amount, notes, id_user, user_to, entry_by, entry_date) VALUES ("
+                    . "{$saId}, {$settlementType}, {$accountId}, '{$items}', {$uom}, '{$qty}', '{$price}', '{$amount}', '{$notes}', '{$id_user}', '{$userTo}', {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+                $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+                if ($result !== false) {
+                    $sa_id = $myDatabase->insert_id;
+
+                    $return_value = '|OK|Data has successfully inserted.||';
+					
+					if (isset($_POST['checkedSlips2'])) {
+                        $checks2 = $_POST['checkedSlips2'];
+						$checks3 = $_POST['checkedSlips3'];
+                        if (isset($_POST['checkedSlips'])) {
+                            $checks = $_POST['checkedSlips'];
+                        } else {
+                            $checks = '';
+                        }
+						for ($i = 0; $i < sizeof($checks2); $i++) {
+                            if ($checks[$i] != '') {
+								
+								if($checks2[$i] > $checks3[$i]){
+									$amountTaken = $checks3[$i];
+								}else{
+									$amountTaken = $checks2[$i];
+								}
+								
+								
+                                if ($slipNos2 == '') {
+                                    $slipNos2 .= '(' . $sa_id . ',' . $checks[$i] . ',' . $amountTaken . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'" . ')';
+                                } else {
+                                    $slipNos2 .= ',' . '(' . $sa_id . ',' . $checks[$i] . ',' . $amountTaken . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'". ')';
+                                }
+                            }
+                        }
+                    }
+					echo $slipNos2;
+                    $sql = "INSERT INTO perdin_dp (settle_id, sa_id_adv ,amount,entry_by,entry_date) VALUES {$slipNos2}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if ($result === false) {
+                        echo 'salah';
+                    }
+					
+				}else {
+                    $return_value = '|FAIL|Insert Data failed.||';
+                    echo $sql;
+                }
+				
+			}else{
+				$sql = "UPDATE `perdin_settle_detail` SET "
+                        . "settlementType = '{$settlementType}', "
+                        . "accountId = '{$accountId}', "
+                        . "items = '{$items}', "
+						. "qty = '{$qty}', "
+						. "price = '{$price}', "
+						. "amount = '{$amount}', "
+						. "uom = '{$uom}', "
+						. "user_to = '{$userTo}', "
+						. "notes = '{$notes}' "
+                        . "WHERE settle_id = {$settleId}";
+				$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+				if($result !== false) {
+               
+                $return_value = '|OK|Data has successfully updated.|'. $settleId .'|';
+            } else {
+                $return_value = '|FAIL|update data failed.||';
+            }
+			}
+
+            } else {
+                $return_value = '|FAIL|Please fill the required fields.||';
+            }
+	
+    
+    echo $return_value;
+		
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'non_settle_detail') {
+    // <editor-fold defaultstate="collapsed" desc="invoice_detail">
+echo 'a';
+    $return_value = '';
+    $boolShipment1 = false;
+    $boolPO = false;
+    $boolVendor = false;
+    //$grandTotal = 0;
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+	$saId = $myDatabase->real_escape_string($_POST['sa_id']);
+	$settleId = $myDatabase->real_escape_string($_POST['settleId']);
+	$id_user = $myDatabase->real_escape_string($_POST['id_user']);
+    $uom = $myDatabase->real_escape_string($_POST['uom']);
+    $qty = $myDatabase->real_escape_string($_POST['qty']);
+    $price = $myDatabase->real_escape_string($_POST['price']);
+    $amount = $myDatabase->real_escape_string($_POST['amount']);
+    $notes = $myDatabase->real_escape_string($_POST['notes']);
+	$settlementType = $myDatabase->real_escape_string($_POST['settlementType']);
+	$accountId = $myDatabase->real_escape_string($_POST['accountId']);
+	$items = $myDatabase->real_escape_string($_POST['items']);
+	$userTo = $myDatabase->real_escape_string($_POST['userTo']);
+    $slipNos = "";
+    $slipNos2 = "";
+   
+	$entryBy = $_SESSION['userId'];
+	$date2 = new DateTime();
+	$currentDate2 = $date2->format('Y-m-d H:i:s');
+   
+	
+	if ($settlementType != '' && $accountId != '' && $items != '' && $id_user != '' && $uom != '' && $qty != '' && $price != '' && $amount != 0 && $notes != '') {
+		
+		if ($userTo == ''){
+			$userTo = 0;
+		}
+		if ($saId == ''){
+			$saId = 'NULL';
+		}
+		if($settleId == ''){
+		 $sql = "INSERT INTO `non_settle_detail` (sa_id,settlementType, accountId, items, uom, qty, price, amount, notes, id_user, user_to, entry_by, entry_date) VALUES ("
+                    . "{$saId},{$settlementType}, {$accountId}, '{$items}', {$uom}, '{$qty}', '{$price}', '{$amount}', '{$notes}', '{$id_user}', '{$userTo}', {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'))";
+                $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+                if ($result !== false) {
+                    $sa_id = $myDatabase->insert_id;
+
+                    $return_value = '|OK|Data has successfully inserted.||';
+					
+					if (isset($_POST['checkedSlips2'])) {
+                        $checks2 = $_POST['checkedSlips2'];
+						$checks3 = $_POST['checkedSlips3'];
+                        if (isset($_POST['checkedSlips'])) {
+                            $checks = $_POST['checkedSlips'];
+                        } else {
+                            $checks = '';
+                        }
+						for ($i = 0; $i < sizeof($checks2); $i++) {
+                            if ($checks[$i] != '') {
+								
+								if($checks2[$i] > $checks3[$i]){
+									$amountTaken = $checks3[$i];
+								}else{
+									$amountTaken = $checks2[$i];
+								}
+								
+								
+                                if ($slipNos2 == '') {
+                                    $slipNos2 .= '(' . $sa_id . ',' . $checks[$i] . ',' . $amountTaken . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'" . ')';
+                                } else {
+                                    $slipNos2 .= ',' . '(' . $sa_id . ',' . $checks[$i] . ',' . $amountTaken . ',' . "'" . $entryBy . "'" . ',' . "'" . $currentDate2 . "'". ')';
+                                }
+                            }
+                        }
+                    }
+					echo $slipNos2;
+                    $sql = "INSERT INTO non_dp (settle_id, sa_id_adv ,amount,entry_by,entry_date) VALUES {$slipNos2}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if ($result === false) {
+                        echo 'salah';
+                    }
+					
+				}else {
+                    $return_value = '|FAIL|Insert Data failed.||';
+                    echo $sql;
+                }
+				
+			}else{
+				$sql = "UPDATE `non_settle_detail` SET "
+                        . "settlementType = '{$settlementType}', "
+                        . "accountId = '{$accountId}', "
+                        . "items = '{$items}', "
+						. "qty = '{$qty}', "
+						. "price = '{$price}', "
+						. "amount = '{$amount}', "
+						. "uom = '{$uom}', "
+						. "user_to = '{$userTo}', "
+						. "notes = '{$notes}' "
+                        . "WHERE settle_id = {$settleId}";
+				$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+				if($result !== false) {
+               
+                $return_value = '|OK|Data has successfully updated.|'. $settleId .'|';
+            } else {
+                $return_value = '|FAIL|update data failed.||';
+            }
+			}
+
+            } else {
+                $return_value = '|FAIL|Please fill the required fields.||';
+            }
+	
+    
+    echo $return_value;
+		
+}
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_settle_detail') {
+    // <editor-fold defaultstate="collapsed" desc="delete_user">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $settle_id = $myDatabase->real_escape_string($_POST['settle_id']);
+    // </editor-fold>
+    
+    if($settle_id != '') {
+		$sql = "DELETE FROM perdin_dp WHERE settle_id = {$settle_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		
+		
+        $sql = "DELETE FROM `perdin_settle_detail` WHERE settle_id = {$settle_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+        if($result !== false) {
+            $return_value = '|OK|Data has successfully deleted.|';
+
+        } else {
+            $return_value = '|FAIL|Delete Data failed.|';
+        }
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}		
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_settle_detail_non') {
+    // <editor-fold defaultstate="collapsed" desc="delete_user">
+    
+    $return_value = '';
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $settle_id = $myDatabase->real_escape_string($_POST['settle_id']);
+    // </editor-fold>
+    
+    if($settle_id != '') {
+		$sql = "DELETE FROM non_dp WHERE settle_id = {$settle_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+		
+		
+        $sql = "DELETE FROM `non_settle_detail` WHERE settle_id = {$settle_id}";
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+        if($result !== false) {
+            $return_value = '|OK|Data has successfully deleted.|';
+
+        } else {
+            $return_value = '|FAIL|Delete Data failed.|';
+        }
+    } else {
+        $return_value = '|FAIL|Record not found.|';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
+
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'payment_data') {
+    // <editor-fold defaultstate="collapsed" desc="payment_data">
+
+    $return_value = '';
+    $boolContinue = false;
+	$boolBank = false;
+	$boolDate = false;
+    $boolUpdateTransaction = false;
+    $boolUpdateShipment = false;
+    $boolContinue2 = true;
+    $tempStamp = '';
+    $periodPaymentFrom='';
+    $periodPaymentTo='';
+
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $paymentMethod = $myDatabase->real_escape_string($_POST['paymentMethod']);
+    $paymentDate = $myDatabase->real_escape_string($_POST['paymentDate']);
+    $paymentType = $myDatabase->real_escape_string($_POST['paymentType']);
+	$payment_type = $myDatabase->real_escape_string($_POST['payment_type']);
+    $bankId = $myDatabase->real_escape_string($_POST['bankId']);
+    $paymentFor = $myDatabase->real_escape_string($_POST['paymentFor']);
+    $accountId = $myDatabase->real_escape_string($_POST['accountId']);
+    $stockpileId = $myDatabase->real_escape_string($_POST['stockpileId']);
+    $vendorId = $myDatabase->real_escape_string($_POST['vendorId']);
+    $stockpileContractId = $myDatabase->real_escape_string($_POST['stockpileContractId']);
+	$stockpileContractId2 = $myDatabase->real_escape_string($_POST['stockpileContractId2']);
+	$stockpileContractId3 = $myDatabase->real_escape_string($_POST['stockpileContractId3']);
+    $stockpileId1 = $myDatabase->real_escape_string($_POST['stockpileId1']);
+    $vendorId1 = $myDatabase->real_escape_string($_POST['vendorId1']);
+    $stockpileId2 = $myDatabase->real_escape_string($_POST['stockpileId2']);
+    $freightId = $myDatabase->real_escape_string($_POST['freightId']);
+	$stockpileId4 = $myDatabase->real_escape_string($_POST['stockpileId4']);
+    $vendorHandlingId = $myDatabase->real_escape_string($_POST['vendorHandlingId']);
+    $stockpileId3 = $myDatabase->real_escape_string($_POST['stockpileId3']);
+    $laborId = $myDatabase->real_escape_string($_POST['laborId']);
+    $customerId = $myDatabase->real_escape_string($_POST['customerId']);
+    $salesId = $myDatabase->real_escape_string($_POST['salesId']);
+    $shipmentId = $myDatabase->real_escape_string($_POST['shipmentId']);
+	$shipmentId1 = $myDatabase->real_escape_string($_POST['shipmentId1']);
+	$contractId = $myDatabase->real_escape_string($_POST['contractId']);
+    $generalVendorId = $myDatabase->real_escape_string($_POST['generalVendorId']);
+    $taxInvoice = $myDatabase->real_escape_string($_POST['taxInvoice']);
+    $invoiceNo = $myDatabase->real_escape_string($_POST['invoiceNo']);
+    $currencyId = $myDatabase->real_escape_string($_POST['currencyId']);
+    $bankCurrencyId = $myDatabase->real_escape_string($_POST['bankCurrencyId']);
+    $journalCurrencyId = $myDatabase->real_escape_string($_POST['journalCurrencyId']);
+    $exchangeRate = str_replace(",", "", $myDatabase->real_escape_string($_POST['exchangeRate']));
+    $amount = str_replace(",", "", $myDatabase->real_escape_string($_POST['amount']));
+    $originalAmount = $amount;
+    $totalPrice = str_replace(",", "", $myDatabase->real_escape_string($_POST['totalPrice']));
+    $downPayment = str_replace(",", "", $myDatabase->real_escape_string($_POST['downPayment']));
+    $grandTotal = str_replace(",", "", $myDatabase->real_escape_string($_POST['grandTotal']));
+    $ppn = str_replace(",", "", $myDatabase->real_escape_string($_POST['ppn']));
+    $pph = str_replace(",", "", $myDatabase->real_escape_string($_POST['pph']));
+    $price = str_replace(",", "", $myDatabase->real_escape_string($_POST['price']));
+	$qty = str_replace(",", "", $myDatabase->real_escape_string($_POST['qty']));
+	$fc_ppn_dp = str_replace(",", "", $myDatabase->real_escape_string($_POST['fc_ppn_dp']));
+    $ppn1 = str_replace(",", "", $myDatabase->real_escape_string($_POST['ppn1']));
+	$ppn2 = str_replace(",", "", $myDatabase->real_escape_string($_POST['ppn2']));
+    $pph1 = str_replace(",", "", $myDatabase->real_escape_string($_POST['pph1']));
+    $notes = $myDatabase->real_escape_string($_POST['paymentNotes']);
+    $remarks = $myDatabase->real_escape_string($_POST['remarks']);
+	$remarks2 = $myDatabase->real_escape_string($_POST['remarks2']);
+    $paymentLocation = $myDatabase->real_escape_string($_POST['paymentLocation']);
+	$stockpileLocation = $myDatabase->real_escape_string($_POST['stockpileLocation']);
+    $chequeNo = $myDatabase->real_escape_string($_POST['chequeNo']);
+	$invoiceDate = $myDatabase->real_escape_string($_POST['invoiceDate']);
+	$invoiceId = $myDatabase->real_escape_string($_POST['invoiceId']);
+	$paymentCashId = $paymentFor;
+    $slipNos = "";
+    $shipmentNos = "";
+	$priceFreight = str_replace(",", "", $myDatabase->real_escape_string($_POST['priceFreight']));
+	$qtyFreight = str_replace(",", "", $myDatabase->real_escape_string($_POST['qtyFreight']));
+	$terminFreight = str_replace(",", "", $myDatabase->real_escape_string($_POST['terminFreight']));
+	$stockpileIdFcDp = $myDatabase->real_escape_string($_POST['stockpileIdFcDp']);
+    $freightIdFcDp = $myDatabase->real_escape_string($_POST['freightIdFcDp']);
+	$freightBankDp = $myDatabase->real_escape_string($_POST['freightBankDp']);
+	$vendorBankId = $myDatabase->real_escape_string($_POST['vendorBankId']);
+	$qtyHandlingDP = str_replace(",", "", $myDatabase->real_escape_string($_POST['qtyHandlingDP']));
+	$priceHandlingDP = str_replace(",", "", $myDatabase->real_escape_string($_POST['priceHandlingDP']));
+	$terminHandlingDP = str_replace(",", "", $myDatabase->real_escape_string($_POST['terminHandlingDP']));
+	$stockpileVhDp = $myDatabase->real_escape_string($_POST['stockpileVhDp']);
+	$vendorHandlingDp = $myDatabase->real_escape_string($_POST['vendorHandlingDp']);
+	$vendorHandlingBankDp = $myDatabase->real_escape_string($_POST['vendorHandlingBankDp']);
+	$vendorHandlingBankId = $myDatabase->real_escape_string($_POST['vendorHandlingBankId']);
+	$freightBankId = $myDatabase->real_escape_string($_POST['freightBankId']);
+	$qtyLabor = str_replace(",", "", $myDatabase->real_escape_string($_POST['qtyLabor']));
+	$priceLabor = str_replace(",", "", $myDatabase->real_escape_string($_POST['priceLabor']));
+	$terminLabor = str_replace(",", "", $myDatabase->real_escape_string($_POST['terminLabor']));
+	$stockpileLaborDp = $myDatabase->real_escape_string($_POST['stockpileLaborDp']);
+	$laborDp = $myDatabase->real_escape_string($_POST['laborDp']);
+	$laborBankDp = $myDatabase->real_escape_string($_POST['laborBankDp']);
+	$laborBankId = $myDatabase->real_escape_string($_POST['laborBankId']);
+	$gvBankId = $myDatabase->real_escape_string($_POST['gvBankId']);
+	$curahBankId = $myDatabase->real_escape_string($_POST['curahBankId']);
+	$gvPCBankId = $myDatabase->real_escape_string($_POST['gvPCBankId']);
+  $paymentFrom = $myDatabase->real_escape_string($_POST['paymentFrom']);
+  $paymentFrom1 = $myDatabase->real_escape_string($_POST['paymentFrom1']);
+  $paymentFromUP = $myDatabase->real_escape_string($_POST['paymentFromUP']);
+  $paymentFromHP = $myDatabase->real_escape_string($_POST['paymentFromHP']);
+  $paymentTo = $myDatabase->real_escape_string($_POST['paymentTo']);
+  $paymentTo1 = $myDatabase->real_escape_string($_POST['paymentTo1']);
+  $paymentToUP = $myDatabase->real_escape_string($_POST['paymentToUP']);
+  $paymentToHP = $myDatabase->real_escape_string($_POST['paymentToHP']);
+  
+  $totalPrice2 = str_replace(",", "", $myDatabase->real_escape_string($_POST['totalPrice2']));
+  $contractHandling = $myDatabase->real_escape_string($_POST['contractHandling']);
+  $contractHandlingDp = $myDatabase->real_escape_string($_POST['contractHandlingDp']);
+  $contractFreight = $myDatabase->real_escape_string($_POST['contractFreight']);
+  $contractFreightDp = $myDatabase->real_escape_string($_POST['contractFreightDp']);
+  $contractCurah = $myDatabase->real_escape_string($_POST['contractCurah']);
+  $contractCurahDp = $myDatabase->real_escape_string($_POST['contractCurahDp']);
+  $stockpileIdCurahDp = $myDatabase->real_escape_string($_POST['stockpileIdCurahDp']);
+  $vendorIdCurahDp = $myDatabase->real_escape_string($_POST['vendorIdCurahDp']);
+  $curahBankDp = $myDatabase->real_escape_string($_POST['curahBankDp']);
+  $downPaymentFC = str_replace(",", "", $myDatabase->real_escape_string($_POST['downPaymentFC']));
+  $downPaymentHC = str_replace(",", "", $myDatabase->real_escape_string($_POST['downPaymentHC']));
+  $downPaymentC = str_replace(",", "", $myDatabase->real_escape_string($_POST['downPaymentC']));
+  $settle = $myDatabase->real_escape_string($_POST['settle']);
+  $gvBankIdPerdin = $myDatabase->real_escape_string($_POST['gvBankIdPerdin']);
+  $gvBankIdNonPerdin = $myDatabase->real_escape_string($_POST['gvBankIdNonPerdin']);
+  $saIdNon = $myDatabase->real_escape_string($_POST['saIdNon']);
+  $saId = $myDatabase->real_escape_string($_POST['saId']);
+  
+  $dateTrans = str_replace("/", "-", $myDatabase->real_escape_string($_POST['paymentDate']));
+	$dt = date('Y-m-d',strtotime($dateTrans));
+	$date2 = new DateTime($dt);
+	$newDate = $date2->format('Y-m-d');
+
+	if($stockpileContractId2 == '' && $stockpileContractId3 == ''){
+		$stockpileContract_Id = 'NULL';
+	}elseif($stockpileContractId2 == '' && $stockpileContractId3 != ''){
+		$stockpileContract_Id = $stockpileContractId3;
+	}elseif($stockpileContractId3 == '' && $stockpileContractId2 != ''){
+		$stockpileContract_Id = $stockpileContractId2;
+	}
+
+	if($shipmentId == '' && $shipmentId1 == ''){
+		$shipment_Id = 'NULL';
+	}elseif($shipmentId == '' && $shipmentId1 != ''){
+		$shipment_Id = $shipmentId1;
+	}elseif($shipmentId != '' && $shipmentId1 == ''){
+		$shipment_Id = $shipmentId;
+	}
+
+	if($invoiceId == '') {
+            $invoiceId = 'NULL';
+        }
+	if($vendorHandlingId == '') {
+            $vendorHandlingId = 'NULL';
+        }
+	if($ppn12 == '') {
+            $ppn12 = 0;
+        }
+	if($pph12 == '') {
+            $pph12 = 0;
+        }
+	
+	if($paymentCashId == 11 || $paymentCashId == 12 ) {
+            $paymentCashId = 10;
+       }else if ($paymentCashId == 10){
+		   $paymentCashId = 10;
+	   }else{
+		   $paymentCashId = 'NULL';
+	   }
+		
+	if($totalPrice2 == '') {
+            $totalPrice2 = 0;
+        }
+		
+	if($contractHandlingDp == '' ) {
+            $contractHandlingDp = 0;
+        }
+		
+	if($contractHandling == '' ) {
+            $contractHandling = 0;
+        }
+		
+	if($contractFreightDp == '' ) {
+            $contractFreightDp = 0;
+        }
+		
+	if($contractFreight == '' ) {
+            $contractFreight = 0;
+        }
+		
+	if($contractCurahDp == '' ) {
+            $contractCurahDp = 0;
+        }
+		
+	if($contractCurah == '' ) {
+            $contractCurah = 0;
+        }
+	
+	if($downPaymentFC == '' ) {
+            $downPaymentFC = 0;
+        }
+	
+	if($downPaymentHC == '' ) {
+            $downPaymentHC = 0;
+        }
+	
+	if($downPaymentC == '' ) {
+            $downPaymentC = 0;
+        }
+		
+	if($settle == '' ) {
+            $settle = 0;
+        }
+
+	$sqlBankAcc = "SELECT account_id FROM bank WHERE bank_id = {$bankId}";
+                    $resultBankAcc = $myDatabase->query($sqlBankAcc, MYSQLI_STORE_RESULT);
+                    if($resultBankAcc->num_rows == 1) {
+                        $rowBankAcc = $resultBankAcc->fetch_object();
+
+						if($rowBankAcc->account_id !== $accountId){
+							$boolBank = true;
+						}
+					}	
+		
+	$termin = 'NULL';
+	$vendorBank = 'NULL';
+	$handlingContract = 0;
+	$freightContract = 0;
+	$curahContract = 0;
+
+    if($paymentFor == 0) {
+        // PKS Kontrak
+        if($stockpileId != '' && $vendorId != '' && $stockpileContractId != '' && $vendorBankId != '' && $grandTotal != 0) {
+            if($paymentMethod == 1) {
+                if($ppn > 0) {
+                    if($taxInvoice != '') {
+                        $boolContinue = true;
+                    }
+                } else {
+                    $boolContinue = true;
+                }
+            } else {
+                $boolContinue = true;
+                $pph = 0;
+				$ppn = $ppn2;
+				$amount = $amount + $ppn;
+				$originalAmount = $originalAmount + $ppn;
+				if($ppn2 == '') {
+					$ppn = 0;
+				}
+            }
+            $salesId = 'NULL';
+            $freightId = 'NULL';
+            $laborId = 'NULL';
+            $vendorId1 = 'NULL';
+			$qty = 'NULL';
+			$price = 'NULL';
+            //$shipment_Id = 'NULL';
+			//$stockpileContract_Id = 'NULL';
+			//$shipmentId1 = 'NULL';
+			//$stockpileContractId3 = 'NULL';
+            $generalVendorId = 'NULL';
+			$vendorBank = $vendorBankId;
+			
+			$sql = "SELECT DATE_FORMAT(c.entry_date,'%Y-%m-%d') AS contractDate FROM contract c 
+			LEFT JOIN stockpile_contract sc ON sc.contact_id = c.contract_id WHERE sc.stockpile_contract_id = {$stockpileContractId} LIMIT 1";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+            if($result !== false && $result->num_rows == 1) {
+                $row = $result->fetch_object();
+				$contractDate = $row->contractDate;	
+			}
+			
+			if($contractDate <= $newDate){
+				$boolDate = true;
+			}
+			
+        }
+    } else if($paymentFor == 1) {
+      $periodPaymentFrom=$paymentFrom1;
+      $periodPaymentTo=$paymentTo1;
+        if($paymentType == 1) {
+            // Sales
+      			if($customerId != '' && $salesId != '') {
+                $boolContinue = true;
+                $stockpileContractId = 'NULL';
+                $freightId = 'NULL';
+                $laborId = 'NULL';
+                $vendorId1 = 'NULL';
+				$qty = 'NULL';
+				$price = 'NULL';
+               // $shipment_Id = 'NULL';
+				//$stockpileContract_Id = 'NULL';
+				//$shipmentId1 = 'NULL';
+				//$stockpileContractId3 = 'NULL';
+                $generalVendorId = 'NULL';
+				
+
+                if($paymentMethod == 2) {
+
+					$ppn = 0;
+
+                    $pph = 0;
+                }
+//                $amount = 0;
+//                $originalAmount = 0;
+
+			$sql = "SELECT DATE_FORMAT(sales_date,'%Y-%m-%d') AS salesDate FROM sales WHERE sales_id = {$salesId}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+            if($result !== false && $result->num_rows == 1) {
+                $row = $result->fetch_object();
+				$salesDate = $row->salesDate;	
+			}
+			
+			if($salesDate <= $newDate){
+				$boolDate = true;
+			}
+			
+            }
+        } else if($paymentType == 2) {
+            // PKS Curah
+            if($paymentMethod == 1 && $stockpileId1 != '' && $vendorId1 != '' && $grandTotal >= 0) {
+                if($ppn > 0) {
+                    if($taxInvoice != '') {
+                        $boolContinue = true;
+                    }
+                } else {
+                    $boolContinue = true;
+                }
+                $salesId = 'NULL';
+                $stockpileContractId = 'NULL';
+                $freightId = 'NULL';
+                $laborId = 'NULL';
+				$qty = 'NULL';
+				$price = 'NULL';
+				$vendorBank = $curahBankId;
+              	//$shipment_Id = 'NULL';
+				//$stockpileContract_Id = 'NULL';
+				//$shipmentId1 = 'NULL';
+				//$stockpileContractId3 = 'NULL';
+                $generalVendorId = 'NULL';
+				$boolDate = true;
+				$curahContract = $contractCurah;
+            } elseif($paymentMethod == 2 && $stockpileIdCurahDp != '' && $vendorIdCurahDp != '' && $amount != 0) {
+                $boolContinue = true;
+                $salesId = 'NULL';
+                $stockpileContractId = 'NULL';
+                $freightId = 'NULL';
+                $laborId = 'NULL';
+				$qty = 'NULL';
+			    $price = 'NULL';
+				$vendorBank = $curahBankDp;
+                //$shipment_Id = 'NULL';
+				//$stockpileContract_Id = 'NULL';
+				//$shipmentId1 = 'NULL';
+				//$stockpileContractId3 = 'NULL';
+                $generalVendorId = 'NULL';
+                $ppn = 0;
+                $pph = 0;
+				$boolDate = true;
+				$curahContract = $contractCurahDp;
+				$vendorId1 = $vendorIdCurahDp;
+            }
+        }
+    } else if($paymentFor == 9) {
+        // HC payment
+        $periodPaymentFrom=$paymentFromHP;
+        $periodPaymentTo=$paymentToHP;
+        if($paymentMethod == 2 && $stockpileVhDp != '' && $vendorHandlingDp != '' && $vendorHandlingBankDp != '' && $amount != 0) {
+            $boolContinue = true;
+            $stockpileContractId = 'NULL';
+            $salesId = 'NULL';
+            $laborId = 'NULL';
+            $vendorId1 = 'NULL';
+			$freightId = 'NULL';
+			$qty = $qtyHandlingDP;
+			$price = $priceHandlingDP;
+			$termin = $terminHandlingDP;
+			$vendorBank = $vendorHandlingBankDp;
+			$vendorHandlingId = $vendorHandlingDp;
+			$handlingContract = $contractHandlingDp;
+            //$shipment_Id = 'NULL';
+			//$stockpileContract_Id = 'NULL';
+			//$shipmentId1 = 'NULL';
+			//$stockpileContractId3 = 'NULL';
+            $generalVendorId = 'NULL';
+			$boolDate = true;
+			 $sql = "SELECT pph FROM vendor_handling WHERE vendor_handling_id = {$vendorHandlingDp}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if($result->num_rows == 1) {
+                        $row = $result->fetch_object();
+
+						$pph = $amount * ($row->pph/100);
+                    } else{
+						$pph = 0;
+					}
+            $ppn = 0;
+
+        } elseif($paymentMethod == 1 && $stockpileId4 != '' && $vendorHandlingId != '' && $grandTotal >= 0 && $vendorHandlingBankId != '') {
+            if($ppn > 0) {
+                if($taxInvoice != '') {
+                    $boolContinue = true;
+                }
+            } else {
+                $boolContinue = true;
+            }
+            $stockpileContractId = 'NULL';
+            $salesId = 'NULL';
+            $laborId = 'NULL';
+			$freightId = 'NULL';
+            $vendorId1 = 'NULL';
+			$qty = 'NULL';
+			$price = 'NULL';
+			$vendorBank = $vendorHandlingBankId;
+			$handlingContract = $contractHandling;
+            //$shipment_Id = 'NULL';
+			//$stockpileContract_Id = 'NULL';
+			//$shipmentId1 = 'NULL';
+			//$stockpileContractId3 = 'NULL';
+            $generalVendorId = 'NULL';
+			$boolDate = true;
+        }
+    }else if($paymentFor == 2) {
+        // FC payment
+        $periodPaymentFrom=$paymentFrom;
+        $periodPaymentTo=$paymentTo;
+        if($paymentMethod == 2 && $stockpileIdFcDp != '' && $freightIdFcDp != '' && $freightBankDp != '' && $amount != 0) {
+            $boolContinue = true;
+            $stockpileContractId = 'NULL';
+            $salesId = 'NULL';
+            $laborId = 'NULL';
+            $vendorId1 = 'NULL';
+			$qty = $qtyFreight;
+			$price = $priceFreight;
+			$termin = $terminFreight;
+			$freightId = $freightIdFcDp;
+			$vendorBank = $freightBankDp;
+			$freightContract = $contractFreightDp;
+            //$shipment_Id = 'NULL';
+			//$stockpileContract_Id = 'NULL';
+			//$shipmentId1 = 'NULL';
+			//$stockpileContractId3 = 'NULL';
+            $generalVendorId = 'NULL';
+			$boolDate = true;
+            $sql = "SELECT pph,ppn FROM freight WHERE freight_id = {$freightIdFcDp}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if($result->num_rows == 1) {
+                        $row = $result->fetch_object();
+                        $ppn = $amount * ($row->ppn/100);
+						$pph = $amount * ($row->pph/100);
+                    } else{
+						$pph = 0;
+						$ppn = 0;
+					}
+
+        } elseif($paymentMethod == 1 && $stockpileId2 == 10 && $freightId == 26 && $freightBankId != '') {
+			$boolContinue = true;
+            $ppn = 0;
+            $pph = 0;
+			$freightId = 26;
+            $stockpileContractId = 'NULL';
+            $salesId = 'NULL';
+            $laborId = 'NULL';
+            $vendorId1 = 'NULL';
+			$qty = 'NULL';
+			$price = 'NULL';
+            //$shipmentId = 'NULL';
+            $generalVendorId = 'NULL';
+			$vendorBank = $freightBankId;
+			$freightContract = $contractFreight;
+			//$shipment_Id = 'NULL';
+			//$stockpileContract_Id = 'NULL';
+			//$shipmentId1 = 'NULL';
+			//$stockpileContractId3 = 'NULL';
+			$totalPrice = $originalAmount;
+			$grandTotal = $originalAmount;
+			$boolDate = true;
+      }elseif($paymentMethod == 1 && $stockpileId2 != '' && $freightId != '' && $grandTotal >= 0 && $freightBankId != '') {
+            if($ppn > 0) {
+                if($taxInvoice != '') {
+                    $boolContinue = true;
+                }
+            } else {
+                $boolContinue = true;
+            }
+            $stockpileContractId = 'NULL';
+            $salesId = 'NULL';
+            $laborId = 'NULL';
+            $vendorId1 = 'NULL';
+			$qty = 'NULL';
+			$price = 'NULL';
+			$vendorBank = $freightBankId;
+			$freightContract = $contractFreight;
+            //$shipment_Id = 'NULL';
+			//$stockpileContract_Id = 'NULL';
+			//$shipmentId1 = 'NULL';
+			//$stockpileContractId3 = 'NULL';
+            $generalVendorId = 'NULL';
+			$originalAmount = $amount + $fc_ppn_dp;
+			$boolDate = true;
+        }
+    } else if($paymentFor == 3) {
+        // UC payment
+        $periodPaymentFrom=$paymentFromUP;
+        $periodPaymentTo=$paymentToUP;
+        if($paymentMethod == 1 && $stockpileId3 != '' && $laborId != '' && $grandTotal >= 0 && $laborBankId != '')  {
+            if($ppn > 0) {
+                if($taxInvoice != '') {
+                    $boolContinue = true;
+                }
+            } else {
+                $boolContinue = true;
+            }
+            $stockpileContractId = 'NULL';
+            $salesId = 'NULL';
+            $freightId = 'NULL';
+            $vendorId1 = 'NULL';
+			$qty = 'NULL';
+			$price = 'NULL';
+			$vendorBank = $laborBankId;
+            //$shipment_Id = 'NULL';
+			//$stockpileContract_Id = 'NULL';
+			//$shipmentId1 = 'NULL';
+			//$stockpileContractId3 = 'NULL';
+            $generalVendorId = 'NULL';
+			$boolDate = true;
+        } elseif($paymentMethod == 2 && $stockpileLaborDp != '' && $laborDp != '' && $laborBankDp != '' && $amount != 0) {
+            $boolContinue = true;
+            $stockpileContractId = 'NULL';
+            $salesId = 'NULL';
+            $freightId = 'NULL';
+            $vendorId1 = 'NULL';
+            //$shipmentId = 'NULL';
+			$qty = $qtyLabor;
+			$price = $priceLabor;
+			$termin = $terminLabor;
+			$laborId = $laborDp;
+			$vendorBank = $laborBankDp;
+			//$shipment_Id = 'NULL';
+			//$stockpileContract_Id = 'NULL';
+			//$shipmentId1 = 'NULL';
+			//$stockpileContractId3 = 'NULL';
+            $generalVendorId = 'NULL';
+            $ppn = 0;
+            $pph = 0;
+			$boolDate = true;
+        }
+    } else {
+        $boolContinue = true;
+        $stockpileContractId = 'NULL';
+        $salesId = 'NULL';
+        $freightId = 'NULL';
+        $laborId = 'NULL';
+        $vendorId1 = 'NULL';
+		$boolDate = true;
+		
+		if($invoiceId != '' && $invoiceId != 'NULL'){
+			$sql = "SELECT DATE_FORMAT(invoice_date,'%Y-%m-%d') AS invoiceDate2 FROM invoice WHERE invoice_id = {$invoiceId}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+            if($result !== false && $result->num_rows == 1) {
+                $row = $result->fetch_object();
+				$invoiceDate2 = $row->invoiceDate2;	
+			}
+			
+			if($invoiceDate2 <= $newDate){
+				$boolDate = true;
+			}else{
+				$boolDate = false;
+			}
+			}
+        /*if($shipment_Id == '') {
+            $shipment_Id = 'NULL';
+        }
+		if($stockpileContract_Id == '') {
+            $stockpileContract_Id = 'NULL';
+        }*/
+		if($paymentFor == 8){
+		$vendorBank = $gvBankId;
+		
+			$originalAmount = $grandTotal;
+			$amount = $grandTotal;
+			$totalPrice = $grandTotal;
+		}else if($paymentFor == 10){
+		$vendorBank = $gvPCBankId;
+		}else if($paymentFor == 11){
+			$vendorBank = $gvBankIdPerdin;
+		}else if($paymentFor == 12){
+			$vendorBank = $gvBankIdNonPerdin;
+		}
+
+        if($generalVendorId == '') {
+            $generalVendorId = 'NULL';
+        }
+         if($price == '') {
+            $price = 'NULL';
+        }
+		if($qty == '') {
+            $qty = 'NULL';
+        }
+		 if($paymentType == 1 && ($paymentFor == 4 || $paymentFor == 5 || $paymentFor == 6 || $paymentFor == 7 || $paymentFor == 8 || $paymentFor == 10 || $paymentFor == 11|| $paymentFor == 12)) {
+	        $ppn1 = $ppn1;
+            $pph1 = $pph1;
+           // $grandTotal = $amount;
+			//$originalAmount = $grandTotal;
+			//$amount = $grandTotal;
+			//$totalPrice = $grandTotal;
+
+		 }else if($paymentType == 1) {
+
+			$ppn1 = 0;
+            $pph1 = 0;
+           // $grandTotal = $amount;
+		   //$originalAmount = $grandTotal;
+        }
+        if($paymentFor == 7 || $paymentMethod == 2) {
+            $ppn = 0;
+            $pph = 0;
+        }
+
+       if($paymentFor == 4 || $paymentFor == 5 || $paymentFor == 6 || $paymentFor == 8 || $paymentFor == 10 || $paymentFor == 11|| $paymentFor == 12) {
+            if(is_numeric($ppn1)) {
+                $ppn = $ppn1;
+            } else {
+                $ppn = 0;
+            }
+
+            if(is_numeric($pph1)) {
+                $pph = $pph1;
+            } else {
+                $pph = 0;
+            }
+			
+			$originalAmount = $grandTotal;
+			$amount = $grandTotal;
+			$totalPrice = $grandTotal;
+			
+        }
+    }
+	
+	if($boolDate){
+	if($boolBank){
+    if($paymentDate != '' && $paymentType != '' && $paymentMethod != '' && $accountId != '' && $bankId != '' &&
+            $currencyId != ''  && $boolContinue) {
+       if($paymentMethod == 1 && $paymentType == 2 && ($paymentFor == 0 || $paymentFor == 1 || $paymentFor == 2 || $paymentFor == 3 || $paymentFor == 9)) {
+            // <editor-fold defaultstate="collapsed" desc="PAYMENT - OUT - PKS Curah/FC/UC - UPDATE TRANSACTION">
+            if($amount < $grandTotal || ($amount != 0 && $amount > $grandTotal)) {
+                $boolContinue2 = false;
+            } else {
+                $boolUpdateTransaction = true;
+
+                if($paymentFor == 0) {
+                    $whereProperty = " AND stockpile_contract_id = {$stockpileContractId} ";
+                    $updateProperty = " payment_id ";
+
+                    $sql = "SELECT GROUP_CONCAT(transaction_id) AS transaction_ids "
+                            . "FROM `transaction` "
+                            . "WHERE stockpile_contract_id = {$stockpileContractId} ";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if($result->num_rows == 1) {
+                        $row = $result->fetch_object();
+                        $slipNos = $row->transaction_id;
+                    }
+                } else if($paymentFor == 1) {
+					
+					$paymentIds = '';
+					
+					if (isset($_POST['checkedSlipsDP'])) {
+                    $checksDP = $_POST['checkedSlipsDP'];
+                    for ($i = 0; $i < sizeof($checksDP); $i++) {
+                        if($paymentIds == '') {
+                            $paymentIds .= $checksDP[$i];
+                        } else {
+                            $paymentIds .= ','. $checksDP[$i];
+                        }
+                    }
+                }
+				
+                    $whereProperty = " AND p.vendor_id = {$vendorId1} AND p.payment_id IN ({$paymentIds})";
+                    $updateProperty = " payment_id ";
+                } else if($paymentFor == 2) {
+					
+					$paymentIds = '';
+					
+					if (isset($_POST['checkedSlipsDP'])) {
+                    $checksDP = $_POST['checkedSlipsDP'];
+                    for ($i = 0; $i < sizeof($checksDP); $i++) {
+                        if($paymentIds == '') {
+                            $paymentIds .= $checksDP[$i];
+                        } else {
+                            $paymentIds .= ','. $checksDP[$i];
+                        }
+                    }
+                }
+				
+                    $whereProperty = " AND p.freight_id = {$freightId} AND p.payment_id IN ({$paymentIds})";
+                    $updateProperty = " fc_payment_id ";
+                } else if($paymentFor == 9) {
+					
+					 $paymentIds = '';
+					
+					if (isset($_POST['checkedSlipsDP'])) {
+                    $checksDP = $_POST['checkedSlipsDP'];
+                    for ($i = 0; $i < sizeof($checksDP); $i++) {
+                        if($paymentIds == '') {
+                            $paymentIds .= $checksDP[$i];
+                        } else {
+                            $paymentIds .= ','. $checksDP[$i];
+                        }
+                    }
+                }
+					
+                    //$whereProperty = " AND p.vendor_handling_id = {$vendorHandlingId} AND p.handlingContract = {$handlingContract} AND p.payment_id IN ({$paymentIds})";
+					$whereProperty = " AND p.vendor_handling_id = {$vendorHandlingId} AND p.payment_id IN ({$paymentIds})";
+                    $updateProperty = " hc_payment_id ";
+                } else if($paymentFor == 3) {
+                    $whereProperty = " AND labor_id = {$laborId} ";
+                    $updateProperty = " uc_payment_id ";
+                }
+
+                if (isset($_POST['checkedSlips'])) {
+                    $checks = $_POST['checkedSlips'];
+                    for ($i = 0; $i < sizeof($checks); $i++) {
+                        if($slipNos == '') {
+                            $slipNos .= $checks[$i];
+                        } else {
+                            $slipNos .= ','. $checks[$i];
+                        }
+                    }
+                }
+
+               if($grandTotal <= 0) {
+                    $amount = $totalPrice;
+					//$jumlahDP = 0;
+                    $sql = "SELECT p.*, f.pph AS fpph, vh.`pph` AS vhpph , v.`ppn` AS vppn
+							FROM `payment` p 
+							LEFT JOIN freight f ON f.`freight_id` = p.`freight_id` 
+							LEFT JOIN vendor_handling vh ON vh.`vendor_handling_id` = p.`vendor_handling_id`
+							LEFT JOIN vendor v ON v.`vendor_id` = p.`vendor_id`
+                            WHERE p.payment_type = {$paymentType}
+                            AND p.payment_method = 2 AND p.payment_status = 0
+                            {$whereProperty}
+                            AND p.amount_converted > 0
+                            AND p.company_id = {$_SESSION['companyId']}
+                            ORDER BY p.amount_converted ASC";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if($result !== false && $result->num_rows > 0) {
+						
+							
+						
+						
+						//echo $totalPrice;
+						//echo $balanceLeft;
+						
+						$availableDP1 = '';	
+                        while($row = $result->fetch_object()) {
+							//$balanceLeft = $totalPrice2;
+								//$dp = $row->amount_converted;
+							
+							/*if($paymentFor == 9) {
+									$availableDP = $dp - ($balanceLeft / ((100 - $row->vhpph)/100));
+								}else{
+									$availableDP = $dp - $balanceLeft;
+								}
+                            if($availableDP > 0) {
+                                $sql2 = "UPDATE payment SET amount = ". $availableDP/$row->exchange_rate .", amount_converted = ". $availableDP ." WHERE payment_id = {$row->payment_id}";
+                                $result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+                              //  break;
+                            } elseif($availableDP <= 0) {
+                                $balanceLeft = $balanceLeft - $row->amount_converted;
+                                $sql2 = "UPDATE payment SET amount = 0, amount_converted = 0, pph_amount = 0  WHERE payment_id = {$row->payment_id}";
+                                $result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+                            }*/
+							$availableDP = $totalPrice2;
+							//$jumlahDP = $jumlahDP + $row->original_amount;
+							//$availableDP1 = '';	
+							 if($availableDP > 0) {
+								
+	
+							
+								$totalTaken = 0;
+								$sql = "SELECT SUM(amount_converted) AS total_taken FROM payment WHERE payment_id = {$row->payment_id}";
+								$resultTaken = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+								if($resultTaken !== false && $resultTaken->num_rows == 1) {
+									$rowTaken = $resultTaken->fetch_object();
+									$totalTaken = $rowTaken->total_taken;
+								}
+								
+								if($availableDP >= $totalTaken && $availableDP1 == '') {
+									$availableDP1 = $availableDP - $totalTaken;
+									
+										$quantityTaken = 0;
+									
+									echo 'BB';
+								} else if($availableDP >= $totalTaken && $availableDP1 > $totalTaken) {
+									echo 'AA';
+									if($availableDP1 !== ''){
+									$quantityTaken = $totalTaken - $availableDP1;
+									}else{
+									$quantityTaken = $totalTaken - $availableDP;	
+									}
+									
+									$availableDP = 0;
+									
+								}else if($availableDP1 < $totalTaken) {
+									echo 'AA';
+									if($availableDP1 !== ''){
+									$quantityTaken = $totalTaken - $availableDP1;
+									}else{
+									$quantityTaken = $totalTaken - $availableDP;	
+									}
+									
+									$availableDP = 0;
+									
+								}
+								//$availableDP = 0;		
+							}
+							
+							 $sql2 = "UPDATE payment SET amount = ". $quantityTaken/$row->exchange_rate .", amount_converted = ". $quantityTaken ." 
+							 WHERE payment_id = {$row->payment_id}";
+                                $result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+							
+							
+							echo $sql2;
+							echo '<br>';
+							echo $availableDP;
+							echo '<br>';
+							echo $totalTaken;
+							echo '<br>';
+							echo $availableDP1;
+                        }
+                    }
+                 } else {
+
+					///if($freightId != 312 && $stockpileLocation != 8){
+                $amount = $totalPrice;
+
+                    $sql = "UPDATE `payment` p SET p.amount = 0, p.amount_converted = 0
+                            WHERE p.payment_type = {$paymentType}
+                            AND p.payment_method = 2
+                            {$whereProperty}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+					 //}
+                } //edited by alan
+            }
+            // </editor-fold>
+        }elseif($paymentMethod == 1 && $paymentType == 1 && ($paymentFor == 4 || $paymentFor == 5 || $paymentFor == 6 || $paymentFor == 8)) {
+            // <editor-fold defaultstate="collapsed" desc="PAYMENT - IN - Other with GV">
+            if($invoiceId != 'NULL') {
+                $sql = "SELECT p.*, b.currency_id AS b_currency_id
+                        FROM `payment` p
+                        INNER JOIN bank b
+                        ON b.bank_id = p.bank_id
+                        WHERE p.payment_type = {$paymentType}
+                        AND p.payment_method = 2 AND p.payment_status = 0
+                        AND p.invoice_id = {$invoiceId}
+                        AND p.amount_converted > 0
+                        AND p.company_id = {$_SESSION['companyId']}
+                        ORDER BY p.payment_id ASC";
+                $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                if($result !== false && $result->num_rows > 0) {
+                    while($row = $result->fetch_object()) {
+                        if($row->b_currency_id == $bankCurrencyId && $bankCurrencyId == $journalCurrencyId) {
+                            // IDR - IDR - IDR
+                            $addedAmount = $row->amount;
+                        } elseif($row->b_currency_id != $bankCurrencyId && $bankCurrencyId == $journalCurrencyId) {
+                            // USD - IDR - IDR
+                            $addedAmount = $row->amount * $row->exchange_rate;
+                        } elseif($row->b_currency_id == $bankCurrencyId && $bankCurrencyId != $journalCurrencyId) {
+                            // USD - USD - IDR
+                            $addedAmount = $row->amount;
+                        } elseif($row->b_currency_id != $bankCurrencyId && $bankCurrencyId != $journalCurrencyId) {
+                            // IDR - USD - IDR
+                            $addedAmount = $row->amount / $row->exchange_rate;
+                        }
+                        $sql2 = "UPDATE payment SET amount = 0, amount_converted = 0 WHERE payment_id = {$row->payment_id}";
+                        $result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+                    }
+                }
+
+                $amount = $amount + $addedAmount;
+            }
+
+            // </editor-fold>
+        } elseif($paymentMethod == 1 && $paymentType == 2 && ($paymentFor == 4 || $paymentFor == 5 || $paymentFor == 6 || $paymentFor == 8)) {
+            // <editor-fold defaultstate="collapsed" desc="PAYMENT - OUT - Other with GV">
+            if($generalVendorId != 'NULL') {
+                $sql = "SELECT p.*, b.currency_id AS b_currency_id
+                        FROM `payment` p
+                        INNER JOIN bank b
+                        ON b.bank_id = p.bank_id
+                        WHERE p.payment_type = {$paymentType}
+                        AND p.payment_method = 2 AND p.payment_status = 0
+                        AND p.invoice_id = {$invoiceId}
+                        AND p.amount_converted > 0
+                        AND p.company_id = {$_SESSION['companyId']}
+                        ORDER BY p.payment_id ASC";
+                $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                if($result !== false && $result->num_rows > 0) {
+                    while($row = $result->fetch_object()) {
+                        if($row->b_currency_id == $bankCurrencyId && $bankCurrencyId == $journalCurrencyId) {
+                            // IDR - IDR - IDR
+                            //$addedAmount = $row->amount;
+							$addedAmount = 0;
+                        } elseif($row->b_currency_id != $bankCurrencyId && $bankCurrencyId == $journalCurrencyId) {
+                            // USD - IDR - IDR
+                            //$addedAmount = $row->amount * $row->exchange_rate;
+							$addedAmount = 0 * $row->exchange_rate;
+                        } elseif($row->b_currency_id == $bankCurrencyId && $bankCurrencyId != $journalCurrencyId) {
+                            // USD - USD - IDR
+                            //$addedAmount = $row->amount;
+							$addedAmount = 0;
+                        } elseif($row->b_currency_id != $bankCurrencyId && $bankCurrencyId != $journalCurrencyId) {
+                            // IDR - USD - IDR
+                            //$addedAmount = $row->amount / $row->exchange_rate;
+							$addedAmount = 0 * $row->exchange_rate;
+                        }
+                        $sql2 = "UPDATE payment SET amount = 0, amount_converted = 0 WHERE payment_id = {$row->payment_id}";
+                        $result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+                    }
+                }
+
+                $amount = $amount + $addedAmount;
+            }
+		}
+            // </editor-fold>
+
+//        elseif($paymentMethod == 2 && $paymentType == 2) {
+//            $ppn = 0;
+//            $pph = 0;
+//        }
+        elseif($paymentMethod == 2 && $paymentType == 1 && $paymentFor != 4) {
+            // <editor-fold defaultstate="collapsed" desc="DOWN PAYMENT - IN - PKS">
+            $sql = "SELECT shipment_id, COALESCE(dp_amount, 0) AS dp_amount FROM shipment WHERE sales_id = {$salesId}";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+            if($result->num_rows > 0) {
+                $tempStamp = 1;
+                while($row = $result->fetch_object()) {
+
+					$downPayment1 = $myDatabase->real_escape_string($_POST['downPayment'. $row->shipment_id]);
+					//$ppn = $myDatabase->real_escape_string($_POST['ppnSales'. $row->shipment_id]);
+					$ppn = 0;
+					$downPayment = $downPayment1 + $ppn;
+                    if($downPayment != '' && $downPayment != 0) {
+                        if($exchangeRate == '') {
+                            $exchangeRate = 1;
+                        }
+
+                        if($bankCurrencyId == $currencyId && $currencyId != $journalCurrencyId) {
+                            $downPaymentDetailConverted = $downPayment;
+                            $downPaymentDetailJournal = $downPayment * $exchangeRate;
+                        } elseif($bankCurrencyId != $currencyId && $currencyId != $journalCurrencyId) {
+                            $downPaymentDetailConverted = $downPayment / $exchangeRate;
+                            $downPaymentDetailJournal = $downPayment;
+                        } elseif($bankCurrencyId != $currencyId && $currencyId == $journalCurrencyId) {
+                            $downPaymentDetailConverted = $downPayment * $exchangeRate;
+                            $downPaymentDetailJournal = $downPayment * $exchangeRate;
+                        } else {
+                            $downPaymentDetailConverted = $downPayment;
+                            $downPaymentDetailJournal = $downPayment;
+                        }
+
+
+                        $convertedDownPayment = $row->dp_amount + $downPaymentDetailConverted;
+
+                        //untuk table payment
+                        //$amount = $amount + $downPayment;
+                        //$originalAmount = $originalAmount + $downPayment;
+						
+						$amount = $amount;
+                        $originalAmount = $originalAmount;
+
+                        //amount = ikut cur payment
+                        //amount_converted = ikut cur sales
+                        //amount_journal = idr
+                        $sql = "INSERT INTO payment_detail (payment_id, amount, amount_converted, amount_journal, shipment_id) VALUES ("
+                                . "{$tempStamp}, {$downPayment}, {$downPaymentDetailConverted}, {$downPaymentDetailJournal}, {$row->shipment_id})";
+                        $resultUpdate = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+                        $sql = "UPDATE shipment SET dp_amount = {$convertedDownPayment} WHERE shipment_id = {$row->shipment_id}";
+                        $resultUpdate = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    }
+                }
+            }
+
+            if($amount <= 0) {
+                //$boolContinue2 = false;
+            }
+            // </editor-fold>
+        }
+		elseif($paymentMethod == 1 && $paymentType == 1 && $paymentFor == 1) {
+            // <editor-fold defaultstate="collapsed" desc="PAYMENT - IN - PKS">
+
+
+            if($exchangeRate == '') {
+                $exchangeRate = 1;
+            }
+
+            if($bankCurrencyId == $currencyId && $currencyId != $journalCurrencyId) {
+                // USD - USD - IDR
+                $amountConverted = $amount;
+                $grandTotalConverted = $grandTotal;
+            } elseif($bankCurrencyId != $currencyId && $currencyId != $journalCurrencyId) {
+                // IDR - USD - IDR
+                $amountConverted = $amount / $exchangeRate;
+                $grandTotalConverted = $grandTotal;
+            } elseif($bankCurrencyId != $currencyId && $currencyId == $journalCurrencyId) {
+                // USD - IDR - IDR
+                $amountConverted = $amount * $exchangeRate;
+                $grandTotalConverted = $grandTotal;
+            } else {
+                $amountConverted = $amount;
+                $grandTotalConverted = $grandTotal;
+            }
+
+            if($amountConverted < $grandTotalConverted || ($amountConverted != 0 && $amountConverted > $grandTotalConverted)) {
+                $boolContinue2 = false;
+            } else {
+
+                $boolUpdateShipment = true;
+
+                if (isset($_POST['checkedSlips'])) {
+                    $checks = $_POST['checkedSlips'];
+                    $tempStamp = 1;
+                    for ($i = 0; $i < sizeof($checks); $i++) {
+                        if($shipmentNos == '') {
+                            $shipmentNos .= $checks[$i];
+                        } else {
+                            $shipmentNos .= ','. $checks[$i];
+                        }
+
+                        $sql = "SELECT sh.*
+                                FROM shipment sh
+                                WHERE sh.shipment_id = {$checks[$i]}";
+                        $resultShipment = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                        $rowShipment = $resultShipment->fetch_object();
+                        $shipmentPayment = $rowShipment->invoice_amount - $rowShipment->dp_amount;
+
+                        if($bankCurrencyId == $currencyId && $currencyId != $journalCurrencyId) {
+                            $shipmentAmount = $shipmentPayment;
+                            $shipmentPaymentConverted = $shipmentPayment;
+                            $shipmentPaymentJournal = $shipmentPayment * $exchangeRate;
+                        } elseif($bankCurrencyId != $currencyId && $currencyId != $journalCurrencyId) {
+                            $shipmentAmount = $shipmentPayment * $exchangeRate;
+                            $shipmentPaymentConverted = $shipmentPayment;
+                            $shipmentPaymentJournal = $shipmentPayment * $exchangeRate;
+                        } elseif($bankCurrencyId != $currencyId && $currencyId == $journalCurrencyId) {
+                            $shipmentAmount = $shipmentPayment / $exchangeRate;
+                            $shipmentPaymentConverted = $shipmentPayment;
+                            $shipmentPaymentJournal = $shipmentPayment;
+                        } else {
+                            $shipmentAmount = $shipmentPayment;
+                            $shipmentPaymentConverted = $shipmentPayment;
+                            $shipmentPaymentJournal = $shipmentPayment;
+                        }
+
+
+                        $sql = "INSERT INTO payment_detail (payment_id, amount, amount_converted, amount_journal, shipment_id) VALUES ("
+                                . "{$tempStamp}, {$shipmentAmount}, {$shipmentPaymentConverted}, {$shipmentPaymentJournal}, {$checks[$i]})";
+                        $resultUpdate = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+                    }
+                }
+
+                if($shipmentNos == "") {
+                    $boolContinue2 = false;
+                }
+            }
+            // </editor-fold>
+        }
+
+	  if($boolContinue2) {
+            $sql = "select DATE_FORMAT(STR_TO_DATE('{$paymentDate}', '%d/%m/%Y'), '%y%m') AS slip_prefix from dual";
+            $resultSlip = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+            $rowSlip = $resultSlip->fetch_object();
+            $checkPaymentNo = $rowSlip->slip_prefix;
+
+//            $checkPaymentNo = $currentYearMonth;
+
+            $sql = "SELECT LPAD(RIGHT(payment_no, 5) + 1, 5, '0') AS next_id FROM payment WHERE company_id = {$_SESSION['companyId']} AND bank_id = {$bankId} AND payment_no LIKE '{$checkPaymentNo}%' ORDER BY payment_no DESC LIMIT 1";
+            $resultPaymentNo = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+            if($resultPaymentNo->num_rows == 0) {
+                $sql = "SELECT LPAD(1, 5, '0') AS next_id FROM dual LIMIT 1";
+                $resultPaymentNo = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+            }
+            $rowPaymentNo = $resultPaymentNo->fetch_object();
+            $nextPaymentNo = $rowPaymentNo->next_id;
+            $paymentNo = $checkPaymentNo .'-'. $nextPaymentNo;
+
+            if($exchangeRate == '') {
+                $exchangeRate = 1;
+            }
+
+            if($bankCurrencyId == $currencyId && $currencyId != $journalCurrencyId) {
+                // USD - USD - IDR
+                $originalAmountConverted = $originalAmount * $exchangeRate;
+                $amountConverted = $amount * $exchangeRate;
+                $ppnConverted = $ppn;
+                $pphConverted = $pph;
+                $amountJournal = $originalAmount * $exchangeRate;
+                $ppnJournal = $ppn * $exchangeRate;
+                $pphJournal = $pph * $exchangeRate;
+            } elseif($bankCurrencyId != $currencyId && $currencyId != $journalCurrencyId) {
+                // IDR - USD - IDR
+                $originalAmountConverted = $originalAmount / $exchangeRate;
+                $amountConverted = $amount / $exchangeRate;
+                $ppnConverted = $ppn / $exchangeRate;
+                $pphConverted = $pph / $exchangeRate;
+                $amountJournal = $originalAmount;
+                $ppnJournal = $ppn;
+                $pphJournal = $pph;
+				$currencyId = $bankCurrencyId;
+            } elseif($bankCurrencyId != $currencyId && $currencyId == $journalCurrencyId) {
+                // USD - IDR - IDR
+                $originalAmountConverted = $originalAmount * $exchangeRate;
+                $amountConverted = $amount * $exchangeRate;
+                $ppnConverted = $ppn * $exchangeRate;
+                $pphConverted = $pph * $exchangeRate;
+                $amountJournal = $originalAmount * $exchangeRate;
+                $ppnJournal = $ppn * $exchangeRate;
+                $pphJournal = $pph * $exchangeRate;
+				$currencyId = $bankCurrencyId;
+            } else {
+                $originalAmountConverted = $originalAmount;
+                $amountConverted = $amount;
+                $ppnConverted = $ppn;
+                $pphConverted = $pph;
+                $amountJournal = $originalAmount;
+                $ppnJournal = $ppn;
+                $pphJournal = $pph;
+
+            }
+				if($freightId != '' && $fc_ppn_dp != 0){
+					$amountJournal = $originalAmount - $fc_ppn_dp;
+				}
+
+            // currency_id = cur yg di bayarkan
+            // amount, original_amount, ppn, pph = amount yg di input d form
+            // *_converted = di konversi ke cur yg d bayarkan
+            // *_journal = di konversi ke IDR
+            $sql = "INSERT INTO payment (payment_no, payment_date, payment_type, payment_type2, payment_method, account_id, bank_id, stockpile_contract_id, invoice_id, payment_cash_id,"
+                    . "vendor_id, sales_id, freight_id, vendor_handling_id, labor_id, stockpile_contract_id_2,shipment_id, vendor_bank_id, payment_notes, remarks, tax_invoice, invoice_no, currency_id, "
+                    . "exchange_rate, qty, price, termin, amount, amount_converted, original_amount, original_amount_converted, ppn_amount, ppn_amount_converted, "
+                    . "pph_amount, pph_amount_converted, amount_journal, ppn_journal, pph_journal, general_vendor_id, payment_location, cheque_no, entry_by, entry_date, stockpile_location, invoice_date,period_from,period_to,remarks2,handlingContract,freightContract,curahContract,freightDP,handlingDP,curahDP) VALUES ("
+                    . "'{$paymentNo}', STR_TO_DATE('{$paymentDate}', '%d/%m/%Y'), {$paymentType}, {$payment_type},{$paymentMethod}, {$accountId}, {$bankId}, "
+                    . "{$stockpileContractId}, {$invoiceId}, {$paymentCashId}, {$vendorId1}, {$salesId}, {$freightId}, {$vendorHandlingId}, {$laborId}, {$stockpileContract_Id}, {$shipment_Id}, {$vendorBank}, '{$notes}', '{$remarks}', "
+                    . "'{$taxInvoice}', '{$invoiceNo}', {$currencyId}, {$exchangeRate}, "
+                    . "{$qty}, {$price}, {$termin},{$amount}, {$amountConverted}, {$originalAmount}, {$originalAmountConverted}, {$ppn}, {$ppnConverted}, "
+                    . "{$pph}, {$pphConverted}, {$amountJournal}, {$ppnJournal}, {$pphJournal}, {$generalVendorId}, {$paymentLocation}, '{$chequeNo}', {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'),{$stockpileLocation},STR_TO_DATE('$invoiceDate', '%d/%m/%Y %H:%i:%s'),STR_TO_DATE('{$periodPaymentFrom}', '%d/%m/%Y'),STR_TO_DATE('{$periodPaymentTo}', '%d/%m/%Y'), '{$remarks2}', {$handlingContract}, {$freightContract}, {$curahContract},{$downPaymentFC},{$downPaymentHC},{$downPaymentC})";
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                $paymentId = $myDatabase->insert_id;
+
+                $return_value = '|OK|Payment has inserted successfully.|'. $paymentId .'|';
+
+                if($boolUpdateTransaction) {
+                    //$sql = "UPDATE `transaction` SET {$updateProperty} = {$paymentId} WHERE transaction_id IN ($slipNos)";
+                   //$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+					
+					
+					
+						$totalFreightAmount = 0;
+						$sqlz = "SELECT t.`transaction_id`, (t.freight_price * t.freight_quantity) AS f_price,
+ts.`trx_shrink_claim`, 
+ROUND(CASE WHEN ts.trx_shrink_tolerance_kg > 0 AND ((t.shrink * -1) - ts.trx_shrink_tolerance_kg) > 0 AND (SELECT transaction_id FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id) IS NOT NULL AND t.slip_retur IS NOT NULL THEN ((t.shrink *-1) - ts.trx_shrink_tolerance_kg) *-1
+WHEN ts.trx_shrink_tolerance_kg > 0 AND (t.shrink - ts.trx_shrink_tolerance_kg) > 0 AND (SELECT transaction_id FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id) IS NOT NULL THEN t.shrink - ts.trx_shrink_tolerance_kg
+WHEN ts.trx_shrink_tolerance_persen > 0 AND ((t.shrink/t.send_weight) * 100 > ts.trx_shrink_tolerance_persen) AND (SELECT transaction_id FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id) IS NOT NULL AND t.slip_retur IS NOT NULL THEN ((t.shrink *-1) - (SELECT weight_persen FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id))*-1 
+WHEN ts.trx_shrink_tolerance_persen > 0 AND ((t.shrink/t.send_weight) * 100 > ts.trx_shrink_tolerance_persen) AND (SELECT transaction_id FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id) IS NOT NULL THEN t.shrink - (SELECT weight_persen FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id)
+ELSE 0 END,10) AS qtyClaim
+FROM `transaction` t
+LEFT JOIN transaction_shrink_weight ts ON t.`transaction_id` = ts.`transaction_id`
+WHERE t.`transaction_id` IN ({$slipNos})";
+						$resultz = $myDatabase->query($sqlz, MYSQLI_STORE_RESULT);
+						//echo $sqlz;
+						if($resultz !== false && $resultz->num_rows > 0) {
+							while($rowz = $resultz->fetch_object()) {
+								
+								if($rowz->qtyClaim != ''){
+									$qtyClaim = $rowz->qtyClaim;
+								}else{
+									$qtyClaim = 0;
+								}
+								
+								$freightAmount = $rowz->f_price - ($rowz->trx_shrink_claim * $qtyClaim);
+								$totalFreightAmount = $totalFreightAmount + $freightAmount;
+
+								$sql2 = "INSERT INTO payment_oa (payment_id,transaction_id,amount) VALUES({$paymentId},{$rowz->transaction_id},{$freightAmount})";
+								$result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+								if($result2 !== false) {
+								$paymentOAId = $myDatabase->insert_id;
+								}
+								
+								$sql3 = "UPDATE `transaction` SET fc_payment_status = 1 WHERE transaction_id IN ($slipNos)";
+								$result3 = $myDatabase->query($sql3, MYSQLI_STORE_RESULT);
+					
+								
+								
+							}	
+						}
+	
+	if($settle == 1){
+								echo $totalFreightAmount;
+								echo 'AA';
+								
+								
+		$sql22 = "SELECT SUM(original_amount) AS oa_dp FROM payment WHERE payment_id IN ({$paymentIds})  ";
+                    $result22 = $myDatabase->query($sql22, MYSQLI_STORE_RESULT);
+                    if($result22->num_rows == 1) {
+                        $row22 = $result22->fetch_object();
+                        $jumlahDP = $row22->oa_dp;
+                    }
+					echo $jumlahDP;
+					
+								$sqlx = "SELECT t.`transaction_id`, (t.freight_price * t.freight_quantity) AS f_price,
+ts.`trx_shrink_claim`, 
+ROUND(CASE WHEN ts.trx_shrink_tolerance_kg > 0 AND ((t.shrink * -1) - ts.trx_shrink_tolerance_kg) > 0 AND (SELECT transaction_id FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id) IS NOT NULL AND t.slip_retur IS NOT NULL THEN ((t.shrink *-1) - ts.trx_shrink_tolerance_kg) *-1
+WHEN ts.trx_shrink_tolerance_kg > 0 AND (t.shrink - ts.trx_shrink_tolerance_kg) > 0 AND (SELECT transaction_id FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id) IS NOT NULL THEN t.shrink - ts.trx_shrink_tolerance_kg
+WHEN ts.trx_shrink_tolerance_persen > 0 AND ((t.shrink/t.send_weight) * 100 > ts.trx_shrink_tolerance_persen) AND (SELECT transaction_id FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id) IS NOT NULL AND t.slip_retur IS NOT NULL THEN ((t.shrink *-1) - (SELECT weight_persen FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id))*-1 
+WHEN ts.trx_shrink_tolerance_persen > 0 AND ((t.shrink/t.send_weight) * 100 > ts.trx_shrink_tolerance_persen) AND (SELECT transaction_id FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id) IS NOT NULL THEN t.shrink - (SELECT weight_persen FROM transaction_shrink_weight WHERE transaction_id = t.transaction_id)
+ELSE 0 END,10) AS qtyClaim
+FROM `transaction` t
+LEFT JOIN transaction_shrink_weight ts ON t.`transaction_id` = ts.`transaction_id`
+WHERE t.`transaction_id` IN ($slipNos) 
+AND ((t.freight_price * t.freight_quantity) - (SELECT COALESCE(SUM(amount),0) FROM payment_oa WHERE transaction_id = t.transaction_id)) > 0 
+ORDER BY t.`transaction_id` DESC LIMIT 1";
+										$resultx = $myDatabase->query($sqlx, MYSQLI_STORE_RESULT);
+										if($resultx !== false && $resultx->num_rows > 0) {
+											while($rowx = $resultx->fetch_object()) {
+												
+											$freightAmount = $rowx->f_price - ($rowx->trx_shrink_claim * $qtyClaim);
+											$splitAmount = $freightAmount - ($totalFreightAmount - $jumlahDP);
+												
+											$sql4 = "UPDATE `payment_oa` SET amount = {$splitAmount} WHERE transaction_id = {$rowx->transaction_id} AND payment_oa_id = {$paymentOAId}";
+											$result4 = $myDatabase->query($sql4, MYSQLI_STORE_RESULT);
+
+											$sql5 = "UPDATE `transaction` SET fc_payment_status = 2 WHERE transaction_id = {$rowx->transaction_id}";
+											$result5 = $myDatabase->query($sql5, MYSQLI_STORE_RESULT);
+												
+											}
+										}								
+									
+									
+								}
+					
+					
+						
+					
+					
+					
+
+                    $sql = "SELECT transaction_id, sync_status FROM `transaction` WHERE transaction_id IN ($slipNos)";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if($result !== false && $result->num_rows > 0) {
+                        while($row = $result->fetch_object()) {
+                            $syncStatus = 0;
+                            if($row->sync_status == 1) {
+                                $syncStatus = 2;
+                            }
+
+                            $sql2 = "UPDATE `transaction` SET sync_status = {$syncStatus} WHERE transaction_id = {$row->transaction_id}";
+                            $result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+                        }
+                    }
+                }
+
+                if($boolUpdateShipment) {
+                    $sql = "UPDATE `shipment` SET payment_id = {$paymentId} WHERE shipment_id IN ($shipmentNos)";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                }
+
+                if($tempStamp != '') {
+                    $sql = "UPDATE payment_detail SET payment_id = {$paymentId} WHERE payment_id = {$tempStamp}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                }
+                if($paymentFor == 0) {
+                    $sql = "SELECT con.contract_id, con.price_converted * con.quantity AS contract_amount, SUM(p.amount_converted) AS paid_amount, v.ppn, v.pph
+                            FROM stockpile_contract sc
+                            INNER JOIN `contract` con
+                                ON con.contract_id = sc.contract_id
+                            INNER JOIN `payment` p
+                                ON p.stockpile_contract_id = sc.stockpile_contract_id
+							INNER JOIN vendor v
+								ON v.vendor_id = con.vendor_id
+                            WHERE sc.stockpile_contract_id = {$stockpileContractId}
+                            AND con.company_id = {$_SESSION['companyId']} AND p.payment_status = 0
+                            GROUP BY sc.stockpile_contract_id";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if($result->num_rows > 0) {
+                        $row = $result->fetch_object();
+						$ppn = $row->ppn;
+        				$pph = $row->pph;
+
+        				$ppnAmount = ($ppn/100) * $row->contract_amount;
+        				$pphAmount = ($pph/100) * $row->contract_amount;
+						$total  = $pphAmount + $ppnAmount + $row->contract_amount;
+
+
+                        if($row->paid_amount >= $total)
+                 {
+                            $sqlUpdate = "UPDATE `contract` SET payment_status = 1 WHERE contract_id = {$row->contract_id}";
+                            $resultUpdate = $myDatabase->query($sqlUpdate, MYSQLI_STORE_RESULT);
+                        }
+                    }
+                }
+
+				if($paymentFor == 4 || $paymentFor == 5 || $paymentFor == 6 || $paymentFor == 8) {
+                    /*$sql = "SELECT i.invoice_id, i.amount, SUM(p.amount_converted) AS paid_amount, i.ppn, i.pph
+                            FROM invoice i
+                            INNER JOIN `payment` p
+                                ON p.invoice_id = i.invoice_id
+                            WHERE i.`invoice_id` = {$invoiceId}
+                            AND i.company_id = {$_SESSION['companyId']} AND p.payment_status = 0
+                            GROUP BY i.invoice_id";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if($result->num_rows > 0) {
+                        $row = $result->fetch_object();
+						$ppn = $row->ppn;
+        				$pph = $row->pph;
+
+						$total  = ($row->amount + $ppn) - $pph;
+
+
+                        if($row->paid_amount >= $total)
+                 {
+				 }
+					 }*/if($paymentMethod == 1){
+                            $sqlUpdate = "UPDATE `invoice` SET payment_status = 1 WHERE invoice_id = {$invoiceId}";
+                            $resultUpdate = $myDatabase->query($sqlUpdate, MYSQLI_STORE_RESULT);
+
+					 }
+                }
+
+
+
+
+					$sql = "SELECT b.* FROM bank b LEFT JOIN payment p ON p.`bank_id` = b.`bank_id` WHERE p.payment_id = {$paymentId}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                    if($result !== false && $result->num_rows > 0) {
+                        while($row = $result->fetch_object()) {
+							$bankType = $row->bank_type;
+							$bankStockpile = $row->stockpile_id;
+
+						}
+					}
+
+
+				if($paymentFor == 10){
+						$sqlUpdate = "UPDATE `payment_cash` SET payment_id = {$paymentId}, payment_cash_method = {$paymentMethod} WHERE payment_id IS NULL AND entry_by = {$_SESSION['userId']}";
+                            $resultUpdate = $myDatabase->query($sqlUpdate, MYSQLI_STORE_RESULT);
+
+						if($paymentMethod == 1){
+                            $sqlUpdate = "UPDATE `payment_cash` SET payment_cash_status = 1 WHERE payment_id = {$paymentId}";
+                            $resultUpdate = $myDatabase->query($sqlUpdate, MYSQLI_STORE_RESULT);
+
+					 }
+				}
+				
+				if($paymentFor == 12){
+					if($paymentMethod == 2){
+						$shipment_id = 0;
+						$sql = "SELECT a.*, b.`id_user`, b.`shipment_id`, b.`stockpile_id`
+								FROM non_adv_detail a
+								LEFT JOIN non_adv_settle b ON a.`sa_id` = b.`sa_id`
+								WHERE a.`sa_id` = {$saIdNon}";
+						$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+						if($result !== false && $result->num_rows > 0) {
+                        while($row = $result->fetch_object()) {
+							$amount = $row->amount;
+							$keterangan = $row->keterangan;
+							$type = $row->type;
+							$account_id = $row->account_id;
+							$id_user = $row->id_user;
+							$shipment_id = $row->shipment_id;
+							$stockpile_id = $row->stockpile_id;
+						}
+						$sql = "INSERT INTO `payment_cash` (payment_id, payment_cash_method, type, account_id, general_vendor_id, shipment_id, stockpile_remark, qty, price, termin, amount, amount_converted, currency_id, exchange_rate, ppnID, ppn, ppn_converted, pphID, pph, pph_converted, tamount, tamount_converted, notes, company_id, entry_by, entry_date, idUOM) VALUES ({$paymentId}, 2, {$type}, {$account_id}, {$id_user}, {$shipment_id}, {$stockpile_id} ,1, '{$amount}', 100, '{$amount}', '{$amount}',1,1,0,0,0,0,0,0,'{$amount}','{$amount}','{$keterangan}', 2, {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'),17)";
+						$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+						$pc_dp_id = $myDatabase->insert_id;
+						
+						$sqlUpdate = "UPDATE `non_adv_settle` SET pc_dp_id = {$pc_dp_id} WHERE sa_id = {$saIdNon}";
+                        $resultUpdate = $myDatabase->query($sqlUpdate, MYSQLI_STORE_RESULT);
+						
+						$sqlUpdatePG = "UPDATE `non_adv_settle` SET invoice_status = 1 WHERE sa_id = {$saIdNon}";
+						$updatePG = $myDatabase->query($sqlUpdatePG, MYSQLI_STORE_RESULT);
+						
+					}
+						
+					}else if($paymentMethod == 1){
+						
+						$shipment_id = 0;
+						$sql1 = "SELECT a.*, b.`shipment_id`, b.`stockpile_id`, c.`sa_id_adv`, d.`pc_dp_id`, c.`amount` AS advance
+								FROM non_settle_detail a
+								LEFT JOIN non_adv_settle b ON a.`sa_id` = b.`sa_id`
+								LEFT JOIN non_dp c ON c.`settle_id` = a.`settle_id`
+								LEFT JOIN non_adv_settle d ON d.`sa_id` = c.`sa_id_adv`
+								WHERE a.`sa_id` = {$saIdNon}";
+						$result1 = $myDatabase->query($sql1, MYSQLI_STORE_RESULT);
+						if($result1 !== false && $result1->num_rows > 0) {
+                        while($row1 = $result1->fetch_object()) {
+							$amount = $row1->amount;
+							$keterangan = $row1->items;
+							$type = $row1->settlementType;
+							$account_id = $row1->accountId;
+							$id_user = $row1->id_user;
+							$shipment_id = $row1->shipment_id;
+							$stockpile_id = $row1->stockpile_id;
+							$qty = $row1->qty;
+							$price = $row1->price;
+							$uom = $row1->uom;
+							$sa_id_adv = $row1->sa_id_adv;
+							$payment_cash_dp = $row1->pc_dp_id;
+							$advance = $row1->advance;
+							
+						
+						$sql2 = "INSERT INTO `payment_cash` (payment_id, payment_cash_method, type, account_id, general_vendor_id, shipment_id, stockpile_remark, qty, price, termin, amount, amount_converted, currency_id, exchange_rate, ppnID, ppn, ppn_converted, pphID, pph, pph_converted, tamount, tamount_converted, notes, company_id, entry_by, entry_date, idUOM) VALUES ({$paymentId}, 2, {$type}, {$account_id}, {$id_user}, {$shipment_id}, {$stockpile_id} ,'{$qty}', '{$price}', 100, '{$amount}', '{$amount}',1,1,0,0,0,0,0,0,'{$amount}','{$amount}','{$keterangan}', 2, {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'),'{$uom}')";
+						$result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+						$payment_cash_id = $myDatabase->insert_id;
+						
+						if($payment_cash_dp != 'NULL'){
+							
+						$sql3 = "INSERT INTO `payment_cash_dp` (payment_cash_id, payment_cash_dp, amount_payment) VALUES ({$payment_cash_id}, {$payment_cash_dp}, '{$advance}')";
+						$result3 = $myDatabase->query($sql3, MYSQLI_STORE_RESULT);
+						
+						}
+						
+						//$sqlUpdate = "UPDATE `non_adv_settle` SET pc_dp_id = {$pc_dp_id} WHERE sa_id = {$saIdNon}";
+                        //$resultUpdate = $myDatabase->query($sqlUpdate, MYSQLI_STORE_RESULT);
+						}
+						//echo $sqlaabb;
+						
+					}
+						$sqlUpdatePG = "UPDATE `non_adv_settle` SET invoice_status = 1 WHERE sa_id = {$saIdNon}";
+						$updatePG = $myDatabase->query($sqlUpdatePG, MYSQLI_STORE_RESULT);
+						
+					}
+					
+					
+				}
+				
+				if($paymentFor == 11){
+					if($paymentMethod == 2){
+						$shipment_id = 0;
+						$sql = "SELECT a.`total_amount` AS amount, a.`remarks` AS keterangan, b.`type`, b.`account_id`, a.`id_user`, a.`shipment_id`, a.`stockpile_id`
+								FROM perdin_adv_settle a
+								LEFT JOIN perdin_adv_detail b ON a.`sa_id` = b.`sa_id`
+								WHERE a.`sa_id` = {$saId} LIMIT 1";
+						$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+						if($result !== false && $result->num_rows > 0) {
+                        while($row = $result->fetch_object()) {
+							$amount = $row->amount;
+							$keterangan = $row->keterangan;
+							$type = $row->type;
+							$account_id = $row->account_id;
+							$id_user = $row->id_user;
+							$shipment_id = $row->shipment_id;
+							$stockpile_id = $row->stockpile_id;
+						}
+						$sql = "INSERT INTO `payment_cash` (payment_id, payment_cash_method, type, account_id, general_vendor_id, shipment_id, stockpile_remark, qty, price, termin, amount, amount_converted, currency_id, exchange_rate, ppnID, ppn, ppn_converted, pphID, pph, pph_converted, tamount, tamount_converted, notes, company_id, entry_by, entry_date, idUOM) VALUES ({$paymentId}, 2, {$type}, {$account_id}, {$id_user}, {$shipment_id}, {$stockpile_id} ,1, '{$amount}', 100, '{$amount}', '{$amount}',1,1,0,0,0,0,0,0,'{$amount}','{$amount}','{$keterangan}', 2, {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'),17)";
+						$result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+						$pc_dp_id = $myDatabase->insert_id;
+						
+						$sqlUpdate = "UPDATE `perdin_adv_settle` SET pc_dp_id = {$pc_dp_id} WHERE sa_id = {$saId}";
+                        $resultUpdate = $myDatabase->query($sqlUpdate, MYSQLI_STORE_RESULT);
+						
+						$sqlUpdatePG = "UPDATE `perdin_adv_settle` SET invoice_status = 1 WHERE sa_id = {$saId}";
+						$updatePG = $myDatabase->query($sqlUpdatePG, MYSQLI_STORE_RESULT);
+						
+					}
+						
+					}else if($paymentMethod == 1){
+						
+						$shipment_id = 0;
+						$sql1 = "SELECT a.*, b.`shipment_id`, b.`stockpile_id`, c.`sa_id_adv`, d.`pc_dp_id`, c.`amount` AS advance
+								FROM perdin_settle_detail a
+								LEFT JOIN perdin_adv_settle b ON a.`sa_id` = b.`sa_id`
+								LEFT JOIN perdin_dp c ON c.`settle_id` = a.`settle_id`
+								LEFT JOIN perdin_adv_settle d ON d.`sa_id` = c.`sa_id_adv`
+								WHERE a.`sa_id` = {$saId}";
+						$result1 = $myDatabase->query($sql1, MYSQLI_STORE_RESULT);
+						if($result1 !== false && $result1->num_rows > 0) {
+                        while($row1 = $result1->fetch_object()) {
+							$amount = $row1->amount;
+							$keterangan = $row1->items;
+							$type = $row1->settlementType;
+							$account_id = $row1->accountId;
+							$id_user = $row1->id_user;
+							$shipment_id = $row1->shipment_id;
+							$stockpile_id = $row1->stockpile_id;
+							$qty = $row1->qty;
+							$price = $row1->price;
+							$uom = $row1->uom;
+							$sa_id_adv = $row1->sa_id_adv;
+							$payment_cash_dp = $row1->pc_dp_id;
+							$advance = $row1->advance;
+							
+						
+						$sql2 = "INSERT INTO `payment_cash` (payment_id, payment_cash_method, type, account_id, general_vendor_id, shipment_id, stockpile_remark, qty, price, termin, amount, amount_converted, currency_id, exchange_rate, ppnID, ppn, ppn_converted, pphID, pph, pph_converted, tamount, tamount_converted, notes, company_id, entry_by, entry_date, idUOM) VALUES ({$paymentId}, 2, {$type}, {$account_id}, {$id_user}, {$shipment_id}, {$stockpile_id} ,'{$qty}', '{$price}', 100, '{$amount}', '{$amount}',1,1,0,0,0,0,0,0,'{$amount}','{$amount}','{$keterangan}', 2, {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'),'{$uom}')";
+						$result2 = $myDatabase->query($sql2, MYSQLI_STORE_RESULT);
+						$payment_cash_id = $myDatabase->insert_id;
+						
+						if($payment_cash_dp != 'NULL'){
+							
+						$sql3 = "INSERT INTO `payment_cash_dp` (payment_cash_id, payment_cash_dp, amount_payment) VALUES ({$payment_cash_id}, {$payment_cash_dp}, '{$advance}')";
+						$result3 = $myDatabase->query($sql3, MYSQLI_STORE_RESULT);
+						
+						}
+						
+						//$sqlUpdate = "UPDATE `non_adv_settle` SET pc_dp_id = {$pc_dp_id} WHERE sa_id = {$saIdNon}";
+                        //$resultUpdate = $myDatabase->query($sqlUpdate, MYSQLI_STORE_RESULT);
+						}
+						//echo $sqlaabb;
+						
+					}
+						$sqlUpdatePG = "UPDATE `perdin_adv_settle` SET invoice_status = 1 WHERE sa_id = {$saId}";
+						$updatePG = $myDatabase->query($sqlUpdatePG, MYSQLI_STORE_RESULT);
+						
+					}
+					
+					
+				}
+               if($paymentFor == 10 && $bankType == 2){
+                insertGeneralLedger($myDatabase, 'PETTY CASH', "NULL", "NULL", "NULL", "NULL", $paymentId);
+				insertReportGL($myDatabase, 'PETTY CASH', "NULL", "NULL", "NULL", "NULL", $paymentId);
+				}elseif($bankStockpile != 10){
+				insertGeneralLedger($myDatabase, 'PAYMENT ADMIN', "NULL", "NULL", "NULL", "NULL", $paymentId);
+				insertReportGL($myDatabase, 'PAYMENT ADMIN', "NULL", "NULL", "NULL", "NULL", $paymentId);
+				}else{
+				insertGeneralLedger($myDatabase, 'PAYMENT', "NULL", "NULL", "NULL", "NULL", $paymentId);
+				insertReportGL($myDatabase, 'PAYMENT', "NULL", "NULL", "NULL", "NULL", $paymentId);
+				}
+                unset($_SESSION['payment']);
+            } else {
+                $return_value = '|FAIL|Failed insert payment.||';
+                //echo $downPayment;
+				echo $sql;
+				//echo $amount;
+				//echo $ppn;
+				//echo $qty;
+				//echo $price;
+				//echo $stockpileContract_Id;
+                if($tempStamp != '') {
+                    $sql = "DELETE FROM payment_detail WHERE payment_id = {$tempStamp}";
+                    $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                }
+            }
+        } else {
+            $return_value = '|FAIL|Please insert correct amount.||';
+        }
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+		echo $sql;
+
+    }
+	}else{
+		$return_value = '|FAIL|Please Choose Different Bank.||';
+	}
+	} ELSE {
+                    $return_value = '|FAIL|Tanggal Input harus sama/melebihi tanggal kontrak/invoice.|';
+                }
+    echo $return_value;
+
+    // </editor-fold>
+}
+
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == 'general_vendor_data') {
+    // <editor-fold defaultstate="collapsed" desc="general_vendor_data">
+    
+    $return_value = '';
+    $boolNew = false;
+    
+    // <editor-fold defaultstate="collapsed" desc="POST variables">
+    $vendorId = $myDatabase->real_escape_string($_POST['vendorId']);
+    $vendorName = $myDatabase->real_escape_string($_POST['vendorName']);
+    $vendorAddress = $myDatabase->real_escape_string($_POST['vendorAddress']);
+    $npwp = $myDatabase->real_escape_string($_POST['npwp']);
+	$npwp_name = $myDatabase->real_escape_string($_POST['npwp_name']);
+    $bankName = $myDatabase->real_escape_string($_POST['bankName']);
+	$branch = $myDatabase->real_escape_string($_POST['branch']);
+    $accountNo = $myDatabase->real_escape_string($_POST['accountNo']);
+    $beneficiary = $myDatabase->real_escape_string($_POST['beneficiary']);
+    $swiftCode = $myDatabase->real_escape_string($_POST['swiftCode']);
+    $ppn = $myDatabase->real_escape_string($_POST['ppn']);
+    //$pph = $myDatabase->real_escape_string($_POST['pph']);
+	$active = $myDatabase->real_escape_string($_POST['active']);
+	$nik = $myDatabase->real_escape_string($_POST['nik']);
+	$stockpile_id = $myDatabase->real_escape_string($_POST['stockpile_id']);
+	$deptId = $myDatabase->real_escape_string($_POST['deptId']);
+	$divId = $myDatabase->real_escape_string($_POST['divId']);
+	$levelId = $myDatabase->real_escape_string($_POST['levelId']);
+    // </editor-fold>
+    
+    if ($vendorId == '') {
+        $boolNew = true;
+    }
+	if ($stockpile_id == '' || $stockpile_id == 0) {
+        $stockpile_id = 0;
+    }
+	if ($deptId == '' || $deptId == 0) {
+        $deptId = 0;
+    }
+	if ($divId == '' || $divId == 0) {
+        $divId = 0;
+    }
+	if ($levelId == '' || $levelId == 0) {
+        $levelId = 0;
+    }
+	
+			
+			
+			
+    
+    if($vendorName != '' && $vendorAddress != '' && $npwp != '' && $npwp_name != ''&& $ppn != '' /*&& $pph != ''*/) {
+        if($boolNew) {
+            $sql = "SELECT * FROM `general_vendor` WHERE UPPER(general_vendor_name) = UPPER('{$vendorName}')";
+        } else {
+            $sql = "SELECT * FROM `general_vendor` WHERE UPPER(general_vendor_name) = UPPER('{$vendorName}') AND general_vendor_id <> {$vendorId}";
+        }
+        $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+        if($result !== false && $result->num_rows == 0) {
+            $ppnValue = 0;
+            $pphValue = 0;
+			$pph = 0;
+			
+            
+            $sqlPPN = "SELECT * FROM tax WHERE tax_id = {$ppn}";
+            $resultPPN = $myDatabase->query($sqlPPN, MYSQLI_STORE_RESULT);
+            if($resultPPN !== false && $resultPPN->num_rows == 1) {
+                $rowPPN = $resultPPN->fetch_object();
+                $ppnValue = $rowPPN->tax_value;
+            }
+            
+            /*$sqlPPh = "SELECT * FROM tax WHERE tax_id = {$pph}";
+            $resultPPh = $myDatabase->query($sqlPPh, MYSQLI_STORE_RESULT);
+            if($resultPPh !== false && $resultPPh->num_rows == 1) {
+                $rowPPh = $resultPPh->fetch_object();
+                $pphValue = $rowPPh->tax_value;
+            }*/
+            
+             if ($boolNew) {
+                $sql = "select max(general_vendor_code) as maxCode from general_vendor";
+                $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+                $row = $result->fetch_array();
+                $generalVendorCode = $row['maxCode'];
+                $noUrut = (int)substr($generalVendorCode, 3, 5);
+                $noUrut++;
+                $char = "GV-";
+                $generalVendorCode = $char . sprintf("%05s", $noUrut);
+                $sql = "INSERT INTO `general_vendor` ( general_vendor_code,general_vendor_name, general_vendor_address, nik, npwp, npwp_name, bank_name, branch, account_no, beneficiary, "
+                    . "swift_code, ppn_tax_id, pph_tax_id, ppn, pph, active, entry_by, entry_date, stockpile_id,dept_id,div_id,level_id) VALUES ("
+                    . "'{$generalVendorCode}','{$vendorName}', '{$vendorAddress}', '{$nik}', '{$npwp}', '{$npwp_name}', '{$bankName}', '{$branch}', '{$accountNo}', "
+                    . "'{$beneficiary}', '{$swiftCode}', {$ppn}, {$pph}, {$ppnValue}, {$pphValue}, {$active}, {$_SESSION['userId']}, STR_TO_DATE('$currentDate', '%d/%m/%Y %H:%i:%s'),{$stockpile_id},{$deptId},{$divId},{$levelId})";
+            } else {
+                $sql = "UPDATE `general_vendor` SET "
+                        . "general_vendor_name = '{$vendorName}', "
+                        . "general_vendor_address = '{$vendorAddress}', "
+						. "nik = '{$nik}', "
+                        . "npwp = '{$npwp}', "
+						. "npwp_name = '{$npwp_name}', "
+                        . "bank_name = '{$bankName}', "
+						. "branch = '{$branch}', "
+                        . "account_no = '{$accountNo}', "
+                        . "beneficiary = '{$beneficiary}', "
+                        . "swift_code = '{$swiftCode}', "
+                        . "ppn_tax_id = {$ppn}, "
+                        . "pph_tax_id = {$pph}, "
+                        . "ppn = {$ppnValue}, "
+                        . "pph = {$pphValue}, "
+						. "stockpile_id = {$stockpile_id}, "
+						. "dept_id = {$deptId}, "
+						. "div_id = {$divId}, "
+						. "level_id = {$levelId}, "
+						. "active = {$active} "
+                        . "WHERE general_vendor_id = {$vendorId}";
+            }
+            $result = $myDatabase->query($sql, MYSQLI_STORE_RESULT);
+
+            if($result !== false) {
+                if($boolNew) {
+                    $vendorId = $myDatabase->insert_id;
+                }
+
+                $return_value = '|OK|General Vendor has successfully inserted/updated.|'. $vendorId .'|';
+            } else {
+                $return_value = '|FAIL|Insert/update vendor failed.||';
+            }
+        } else {
+            $return_value = '|FAIL|General Vendor already exists.||';
+        }
+    } else {
+        $return_value = '|FAIL|Please fill the required fields.||';
+    }
+    
+    echo $return_value;
+    // </editor-fold>
+}
